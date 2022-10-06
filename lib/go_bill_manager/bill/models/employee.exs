@@ -17,4 +17,12 @@ defmodule GoBillManager.Bill.Models.Employee do
     has_many(:bill, Bill, foreign_key: :bill_id)
     timestamps()
   end
+
+  @spec changeset(struct :: t(), params :: map()) :: Ecto.Changeset.t()
+  def changeset(struct \\ %__MODULE__{}, params) do
+    struct
+    |> cast(params, [:name, :role])
+    |> validate_required([:name, :role])
+    |> validate_inclusion(:role, [:attendant, :manager])
+  end
 end
