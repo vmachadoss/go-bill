@@ -11,16 +11,29 @@ defmodule GoBillManager.Bill.Models.Bill do
   alias GoBillManager.Bill.Models.Employee
 
   @type t() :: %__MODULE__{}
-
+  
+  @status ~w(open close)a
+  @castable_fields ~w(amount consumables status board_id employee_id)a
+  
   @primary_key (:id, Ecto.UUID, autogenerate: true)
   schema "bill" do
-    field :amount, :float
+    field :amount, :integer
     field :consumables, :map
-    field :status, Ecto.Enum, values: [:open, :close]
+    field :status, Ecto.Enum, values: @status
     
     belongs_to(:board, Board, type: Ecto.UUID)
     belongs_to(:employee, Employee, type: Ecto.UUID)
 
     timestamps()
+  end
+
+  @spec changeset(struct :: t(), params :: map()) :: Ecto.Changeset.t()
+  def changeset(struct \\ %__MODULE__{}, params) do
+    struct
+    |> cast(params, @castable_fields)
+    |> validate_required(@castable_fields)
+    |> validate_inclusion(:status, @status)
+    |> foreign_key_constraint(:board_id, name: :board_id_fk)
+    |> foreign_key_constraint(:employee_id, name: :employee_id_fk)
   end
 end
