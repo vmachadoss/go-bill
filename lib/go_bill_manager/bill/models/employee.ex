@@ -4,17 +4,21 @@ defmodule GoBillManager.Bill.Models.Employee do
   """
 
   use Ecto.Schema
-  
+
   import Ecto.Changeset
+
+  alias GoBillManager.Bill.Models.Bill
 
   @type t() :: %__MODULE__{}
 
-  @primary_key (:id, Ecto.UUID, autogenerate: true)
+  @roles ~w(attendant manager)a
+
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "employee" do
     field :name, :string
-    field :role, Ecto.Enum, values: [:attendant, :manager]
-    
-    has_many(:bill, Bill, foreign_key: :bill_id)
+    field :role, Ecto.Enum, values: @roles
+
+    has_many(:bill, Bill, foreign_key: :id)
     timestamps()
   end
 
