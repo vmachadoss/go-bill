@@ -6,21 +6,21 @@ defmodule GoBillManager.Bill.Models.Bill do
   use Ecto.Schema
 
   import Ecto.Changeset
-  
+
   alias GoBillManager.Bill.Models.Board
   alias GoBillManager.Bill.Models.Employee
 
   @type t() :: %__MODULE__{}
-  
+
   @status ~w(open close)a
   @castable_fields ~w(amount consumables status board_id employee_id)a
-  
-  @primary_key (:id, Ecto.UUID, autogenerate: true)
+
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "bill" do
     field :amount, :integer
     field :consumables, :map
     field :status, Ecto.Enum, values: @status
-    
+
     belongs_to(:board, Board, type: Ecto.UUID)
     belongs_to(:employee, Employee, type: Ecto.UUID)
 

@@ -10,15 +10,15 @@ defmodule GoBillManager.Bill.Models.Board do
   alias GoBillManager.Bill.Models.Bill
 
   @type t() :: %__MODULE__{}
-  
+
   @status ~w(occupated available cleaning)a
 
-  @primary_key (:id, Ecto.UUID, autogenerate: true)
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "board" do
     field :number_of_customers, :integer
-    field :status, Ecto.Enum, valus: @status
+    field :status, Ecto.Enum, values: @status
 
-    has_one(:bill, Bill, foreign_key: :bill_id)
+    has_one(:bill, Bill, foreign_key: :id)
     timestamps(updated_at: false)
   end
 
