@@ -23,6 +23,7 @@ defmodule GoBillManagerWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import GoBillManagerWeb.ConnCase
+      import GoBillManager.Factory
 
       alias GoBillManagerWeb.Router.Helpers, as: Routes
 

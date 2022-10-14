@@ -24,6 +24,7 @@ defmodule GoBillManager.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import GoBillManager.DataCase
+      import GoBillManager.Factory
     end
   end
 
