@@ -21,8 +21,8 @@ defmodule GoBillManager.Bill.Models.Bill do
     field :consumables, :map
     field :status, Ecto.Enum, values: @status
 
-    belongs_to(:board, Board, type: Ecto.UUID)
-    belongs_to(:employee, Employee, type: Ecto.UUID)
+    belongs_to(:board, Board, foreign_key: :board_id, type: Ecto.UUID)
+    belongs_to(:employee, Employee, foreign_key: :employee_id, type: Ecto.UUID)
 
     timestamps()
   end
@@ -32,7 +32,6 @@ defmodule GoBillManager.Bill.Models.Bill do
     struct
     |> cast(params, @castable_fields)
     |> validate_required(@castable_fields)
-    |> validate_inclusion(:status, @status)
     |> foreign_key_constraint(:board_id, name: :board_id_fk)
     |> foreign_key_constraint(:employee_id, name: :employee_id_fk)
   end
