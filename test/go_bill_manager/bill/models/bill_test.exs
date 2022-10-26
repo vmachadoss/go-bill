@@ -39,11 +39,11 @@ defmodule GoBillManager.Bill.Models.BillTest do
     test "should return valid changeset when params are valid" do
       bill_params = %{
         amount: 10,
-        consumables: %{
-          item1: %{consumable: "cerveja", value: 12.9, quantity: 2},
-          item2: %{consumable: "suco de laranja", value: 9, quantity: 1},
-          item3: %{consumable: "prato feito", value: 25.5, quantity: 2}
-        },
+        consumables: [
+          %{consumable: "cerveja", value: 13, quantity: 2},
+          %{consumable: "suco de laranja", value: 9, quantity: 1},
+          %{consumable: "prato feito", value: 26, quantity: 2}
+        ],
         status: "open",
         board_id: Ecto.UUID.generate(),
         employee_id: Ecto.UUID.generate()
@@ -52,7 +52,6 @@ defmodule GoBillManager.Bill.Models.BillTest do
       assert %Ecto.Changeset{changes: changes, valid?: true} = Bill.changeset(bill_params)
 
       assert bill_params.amount == changes.amount
-      assert bill_params.consumables == changes.consumables
       assert bill_params.status == Atom.to_string(changes.status)
       assert bill_params.board_id == changes.board_id
       assert bill_params.employee_id == changes.employee_id
