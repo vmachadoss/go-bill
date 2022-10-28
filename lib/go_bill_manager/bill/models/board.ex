@@ -14,6 +14,8 @@ defmodule GoBillManager.Bill.Models.Board do
   @status ~w(occupated available cleaning)a
 
   @required_fields ~w(number_of_customers status)a
+  @fields ~w(number_of_customers status)a
+
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "board" do
     field :number_of_customers, :integer
@@ -25,10 +27,9 @@ defmodule GoBillManager.Bill.Models.Board do
 
   @spec changeset(struct :: t(), params :: map()) :: Ecto.Changeset.t()
   def changeset(struct \\ %__MODULE__{}, params) do
-    fields = __schema__(:fields)
-
     struct
-    |> cast(params, fields)
+    |> cast(params, @fields)
+    |> cast_assoc(:bill, with: &Bill.changeset/1)
     |> validate_required(@required_fields)
   end
 end
