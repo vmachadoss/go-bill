@@ -24,7 +24,8 @@ defmodule GoBillManager.Bill.Models.BoardTest do
 
       assert %{
                number_of_customers: ["is invalid"],
-               status: ["is invalid"]
+               status: ["is invalid"],
+               bill: ["is invalid"]
              } == errors_on(changeset)
     end
 

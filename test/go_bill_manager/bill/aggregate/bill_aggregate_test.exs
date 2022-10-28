@@ -29,6 +29,20 @@ defmodule GoBillManager.Bill.Aggregate.BillAggregateTest do
       assert Repo.aggregate(Bill, :count, :id) == 0
     end
 
+    test "should return error, changeset invalid when params are empties" do
+      assert {:error, %Ecto.Changeset{valid?: false} = changeset} = BillAggregate.create_bill(%{})
+
+      assert %{
+               amount: ["can't be blank"],
+               consumables: ["can't be blank"],
+               status: ["can't be blank"],
+               board_id: ["can't be blank"],
+               employee_id: ["can't be blank"]
+             } == errors_on(changeset)
+
+      assert Repo.aggregate(Bill, :count, :id) == 0
+    end
+
     test "should return a valid ok and changeset when the params are valid" do
       %{id: employee_id} = insert(:create_employee)
       %{id: board_id} = insert(:create_board)
