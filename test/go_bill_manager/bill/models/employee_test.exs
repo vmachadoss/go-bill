@@ -16,14 +16,16 @@ defmodule GoBillManager.Bill.Models.EmployeeTest do
     test "should return invalid changeset when params are invalid" do
       employee_params = %{
         name: 123,
-        role: "invalid"
+        role: "invalid",
+        bill: "invalid"
       }
 
       assert %Ecto.Changeset{valid?: false} = changeset = Employee.changeset(employee_params)
 
       assert %{
                name: ["is invalid"],
-               role: ["is invalid"]
+               role: ["is invalid"],
+               bill: ["is invalid"]
              } == errors_on(changeset)
     end
 

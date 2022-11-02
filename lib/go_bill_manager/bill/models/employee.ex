@@ -19,7 +19,7 @@ defmodule GoBillManager.Bill.Models.Employee do
     field :name, :string
     field :role, Ecto.Enum, values: @roles
 
-    has_many(:bill, Bill, foreign_key: :employee_id)
+    has_many :bill, Bill, foreign_key: :employee_id
     timestamps()
   end
 
@@ -27,6 +27,7 @@ defmodule GoBillManager.Bill.Models.Employee do
   def changeset(struct \\ %__MODULE__{}, params) do
     struct
     |> cast(params, @fields)
+    |> cast_assoc(:bill, with: &Bill.changeset/1)
     |> validate_required(@fields)
   end
 end
