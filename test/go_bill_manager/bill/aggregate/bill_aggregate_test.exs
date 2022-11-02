@@ -52,5 +52,38 @@ defmodule GoBillManager.Bill.Aggregate.BillAggregateTest do
 
       assert Repo.aggregate(Bill, :count, :id) == 1
     end
+
+    test "should return error, changeset when params are valid but employee_id and board_id dosen't send" do
+      bill_params = string_params_for(:create_bill)
+
+      assert {:error,
+              %Ecto.Changeset{
+                action: :insert,
+                errors: [
+                  employee_id:
+                    {"does not exist", [constraint: :foreign, constraint_name: "employee_id_fk"]}
+                ],
+                valid?: false
+              }} = BillAggregate.create_bill(bill_params)
+
+      assert Repo.aggregate(Bill, :count, :id) == 0
+    end
+
+    test "should return erro, invalid changeset when params are valid but dosen't sent board_id" do
+      %{id: employee_id} = insert(:create_employee)
+      bill_params = string_params_for(:create_bill, employee_id: employee_id)
+
+      assert {:error,
+              %Ecto.Changeset{
+                action: :insert,
+                errors: [
+                  board_id:
+                    {"does not exist", [constraint: :foreign, constraint_name: "board_id_fk"]}
+                ],
+                valid?: false
+              }} = BillAggregate.create_bill(bill_params)
+
+      assert Repo.aggregate(Bill, :count, :id) == 0
+    end
   end
 end

@@ -3,12 +3,20 @@ defmodule GoBillManager.Repo.Migrations.AddBillTable do
 
   def change do
     create table(:bill, primary_key: false) do
-      add :id, :uuid, primary_key: true
-      add :amount, :float, null: false
-      add :consumables, :map, null: false
-      add :status, :string, null: false
-      add :employee_id, references(:employee, type: :uuid, on_delete: :delete_all), null: false
-      add :board_id, references(:board, type: :uuid, on_delete: :delete_all), null: false
+      add(:id, :uuid, primary_key: true)
+      add(:amount, :float, null: false)
+      add(:consumables, :map, null: false)
+      add(:status, :string, null: false)
+
+      add(
+        :employee_id,
+        references(:employee, type: :uuid, on_delete: :delete_all, name: :employee_id_fk),
+        null: false
+      )
+
+      add(:board_id, references(:board, type: :uuid, on_delete: :delete_all, name: :board_id_fk),
+        null: false
+      )
 
       timestamps()
     end
