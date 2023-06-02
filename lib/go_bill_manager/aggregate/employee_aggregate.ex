@@ -1,9 +1,9 @@
-defmodule GoBillManager.Bill.Aggregate.EmployeeAggregate do
+defmodule GoBillManager.Aggregate.EmployeeAggregate do
   @moduledoc """
   This aggregate module take care of Employee insertions, update and delete operations
   """
 
-  alias GoBillManager.Bill.Models.Employee
+  alias GoBillManager.Models.Employee
   alias GoBillManager.Repo
 
   @spec create_employee(map()) :: Employee.t()

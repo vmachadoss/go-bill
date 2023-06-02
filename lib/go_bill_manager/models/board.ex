@@ -1,4 +1,4 @@
-defmodule GoBillManager.Bill.Models.Board do
+defmodule GoBillManager.Models.Board do
   @moduledoc """
     Model for represent the tables of establishment
   """
@@ -7,7 +7,7 @@ defmodule GoBillManager.Bill.Models.Board do
 
   import Ecto.Changeset
 
-  alias GoBillManager.Bill.Models.Bill
+  alias GoBillManager.Models.Bill
 
   @type t() :: %__MODULE__{}
 

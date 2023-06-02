@@ -1,9 +1,9 @@
-defmodule GoBillManager.Bill.Aggregate.BoardAggregate do
+defmodule GoBillManager.Aggregate.BoardAggregate do
   @moduledoc """
   This aggregate module take care of Board insertions, update and delete operations
   """
 
-  alias GoBillManager.Bill.Models.Board
+  alias GoBillManager.Models.Board
   alias GoBillManager.Repo
 
   @spec create_board(map()) :: Board.t()
