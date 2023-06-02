@@ -5,8 +5,8 @@ defmodule GoBillManager.BillFactory do
 
   defmacro __using__(_opts) do
     quote location: :keep do
-      alias GoBillManager.Bill.Models.Bill
-      alias GoBillManager.Bill.Models.Consumables
+      alias GoBillManager.Models.Bill
+      alias GoBillManager.Models.Consumables
 
       def create_bill_factory(params \\ %{}) do
         merge_attributes(

@@ -1,4 +1,4 @@
-defmodule GoBillManager.Bill.Models.Consumables do
+defmodule GoBillManager.Models.Consumables do
   @moduledoc """
   This schema represent the consumables in bill models
   """

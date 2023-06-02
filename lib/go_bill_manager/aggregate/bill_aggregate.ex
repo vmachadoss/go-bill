@@ -1,9 +1,9 @@
-defmodule GoBillManager.Bill.Aggregate.BillAggregate do
+defmodule GoBillManager.Aggregate.BillAggregate do
   @moduledoc """
   This aggregate module take care of Bill insertions, update and delete operations
   """
 
-  alias GoBillManager.Bill.Models.Bill
+  alias GoBillManager.Models.Bill
   alias GoBillManager.Repo
 
   @spec create_bill(map()) :: Bill.t()

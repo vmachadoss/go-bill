@@ -5,7 +5,7 @@ defmodule GoBillManager.BoardFactory do
 
   defmacro __using__(_opts) do
     quote location: :keep do
-      alias GoBillManager.Bill.Models.Board
+      alias GoBillManager.Models.Board
 
       def create_board_factory(params \\ %{}) do
         merge_attributes(

@@ -1,4 +1,4 @@
-defmodule GoBillManager.Bill.Models.Employee do
+defmodule GoBillManager.Models.Employee do
   @moduledoc """
     Module for represent the employee of establishment
   """
@@ -7,7 +7,7 @@ defmodule GoBillManager.Bill.Models.Employee do
 
   import Ecto.Changeset
 
-  alias GoBillManager.Bill.Models.Bill
+  alias GoBillManager.Models.Bill
 
   @type t() :: %__MODULE__{}
 
