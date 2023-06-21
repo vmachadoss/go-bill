@@ -1,4 +1,4 @@
-defmodule GoBillManager.Models.Employee do
+defmodule GoBillManager.Models.Employees do
   @moduledoc """
     Module for represent the employee of establishment
   """
@@ -7,27 +7,23 @@ defmodule GoBillManager.Models.Employee do
 
   import Ecto.Changeset
 
-  alias GoBillManager.Models.Bill
-
   @type t() :: %__MODULE__{}
 
   @roles ~w(attendant manager)a
 
   @fields ~w(name role)a
   @primary_key {:id, Ecto.UUID, autogenerate: true}
-  schema "employee" do
+  schema "employees" do
     field :name, :string
     field :role, Ecto.Enum, values: @roles
 
-    has_many :bill, Bill, foreign_key: :employee_id
-    timestamps()
+    timestamps(updated_at: false)
   end
 
-  @spec changeset(struct :: t(), params :: map()) :: Ecto.Changeset.t()
-  def changeset(struct \\ %__MODULE__{}, params) do
-    struct
+  @spec changeset(module :: t(), params :: map()) :: Ecto.Changeset.t()
+  def changeset(module \\ %__MODULE__{}, params) do
+    module
     |> cast(params, @fields)
-    |> cast_assoc(:bill, with: &Bill.changeset/1)
     |> validate_required(@fields)
   end
 end
