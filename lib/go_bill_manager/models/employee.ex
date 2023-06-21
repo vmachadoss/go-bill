@@ -1,23 +1,25 @@
-defmodule GoBillManager.Models.Products do
+defmodule GoBillManager.Models.Employee do
   @moduledoc """
-  This schema represent the products in bill models
+    Module for represent the employee of establishment
   """
 
   use Ecto.Schema
 
   import Ecto.Changeset
+  alias GoBillManager.Models.Bill
 
   @type t() :: %__MODULE__{}
 
-  @fields ~w(name retail_price description)a
+  @roles ~w(attendant manager)a
 
+  @fields ~w(name role)a
   @primary_key {:id, Ecto.UUID, autogenerate: true}
-  schema "products" do
+  schema "employees" do
     field :name, :string
-    field :retail_price, :integer
-    field :description, :string
+    field :role, Ecto.Enum, values: @roles
 
-    timestamps()
+    has_many(:bills, Bill, foreign_key: :employee_id)
+    timestamps(updated_at: false)
   end
 
   @spec changeset(module :: t(), params :: map()) :: Ecto.Changeset.t()

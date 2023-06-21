@@ -1,4 +1,4 @@
-defmodule GoBillManager.Models.CustomerTables do
+defmodule GoBillManager.Models.CustomerTable do
   @moduledoc """
     Model for represent the tables of establishment
   """
@@ -6,6 +6,7 @@ defmodule GoBillManager.Models.CustomerTables do
   use Ecto.Schema
 
   import Ecto.Changeset
+  alias GoBillManager.Models.Customer
 
   @type t() :: %__MODULE__{}
 
@@ -19,6 +20,7 @@ defmodule GoBillManager.Models.CustomerTables do
     field :label, :integer
     field :state, Ecto.Enum, values: @state
 
+    has_many(:customers, Customer, foreign_key: :customer_table_id)
     timestamps(updated_at: false)
   end
 

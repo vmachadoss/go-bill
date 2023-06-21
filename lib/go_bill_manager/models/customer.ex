@@ -1,4 +1,4 @@
-defmodule GoBillManager.Models.Customers do
+defmodule GoBillManager.Models.Customer do
   @moduledoc """
     Model for represent the client of establishment
   """
@@ -7,11 +7,17 @@ defmodule GoBillManager.Models.Customers do
 
   import Ecto.Changeset
 
+  alias GoBillManager.Models.Bill
+  alias GoBillManager.Models.CustomerTable
+
   @type t() :: %__MODULE__{}
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "customers" do
     field :name, :string
+
+    belongs_to(:bill, Bill, type: Ecto.UUID)
+    belongs_to(:customer_table, CustomerTable, type: Ecto.UUID)
 
     timestamps(updated_at: false)
   end
@@ -21,5 +27,7 @@ defmodule GoBillManager.Models.Customers do
     module
     |> cast(params, [:name])
     |> validate_required([:name])
+    |> foreign_key_constraint(:customer_table_id, name: :customers_table_id_fk)
+    |> unique_constraint([:bill_id], name: :customers_bill_unique_index)
   end
 end

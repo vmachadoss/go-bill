@@ -7,7 +7,7 @@ defmodule GoBillManager.Repo.Migrations.AddBillsTable do
       add :total_price, :integer, null: false
       add :state, :string
 
-      add :employee_id, references(:employees, type: :uuid), null: false
+      add :employee_id, references(:employees, name: :employees_id_fk, type: :uuid)
 
       timestamps()
     end

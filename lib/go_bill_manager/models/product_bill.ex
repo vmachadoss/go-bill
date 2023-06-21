@@ -1,4 +1,4 @@
-defmodule GoBillManager.Models.ProductsBills do
+defmodule GoBillManager.Models.ProductBill do
   @moduledoc """
   This schema represent the products in bill models
   """
@@ -12,7 +12,7 @@ defmodule GoBillManager.Models.ProductsBills do
   @fields ~w(name retail_price description)a
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
-  schema "products" do
+  schema "products_bills" do
     timestamps()
   end
 

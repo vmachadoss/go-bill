@@ -1,4 +1,4 @@
-defmodule GoBillManager.Models.Bills do
+defmodule GoBillManager.Models.Bill do
   @moduledoc """
     Model for bills of the customers tables
   """
@@ -7,20 +7,21 @@ defmodule GoBillManager.Models.Bills do
 
   import Ecto.Changeset
 
-  alias GoBillManager.Models.Employees
+  alias GoBillManager.Models.Employee
+  alias GoBillManager.Models.Customer
 
   @type t() :: %__MODULE__{}
 
-  @status ~w(open close)a
-  @castable_fields ~w(amount status board_id employee_id)a
+  @state ~w(open close)a
+  @castable_fields ~w(total_price state employee_id)a
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "bills" do
     field :total_price, :integer
-    field :status, Ecto.Enum, values: @status
+    field :state, Ecto.Enum, values: @state
 
-    belongs_to(:employee, Employees, foreign_key: :employee_id, type: Ecto.UUID)
-
+    belongs_to(:employee, Employee, type: Ecto.UUID)
+    has_one(:customer, Customer)
     timestamps()
   end
 
@@ -29,6 +30,6 @@ defmodule GoBillManager.Models.Bills do
     module
     |> cast(params, @castable_fields)
     |> validate_required(@castable_fields)
-    |> foreign_key_constraint(:employee_id, name: :employee_id_fk)
+    |> foreign_key_constraint(:employee_id, name: :employees_id_fk)
   end
 end
