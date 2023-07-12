@@ -1,5 +1,5 @@
 defmodule GoBillManager.Models.ProductTest do
-	use GoBillManager.DataCase
+  use GoBillManager.DataCase
 
   alias GoBillManager.Models.Product
 

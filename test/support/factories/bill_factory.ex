@@ -6,13 +6,16 @@ defmodule GoBillManager.BillFactory do
       alias GoBillManager.Models.Bill
 
       def bill_factory(params \\ %{}) do
-        merge_attributes(%Bill{
-          id: Ecto.UUID.generate(),
-          total_price: Enum.random(1..999),
-          state: Enum.random(~w/open close/),
-          employee_id: Ecto.UUID.generate(),
-          inserted_at: NaiveDateTime.utc_now()
-        }, params)
+        merge_attributes(
+          %Bill{
+            id: Ecto.UUID.generate(),
+            total_price: Enum.random(1..999),
+            state: Enum.random(~w/open close/),
+            employee_id: Ecto.UUID.generate(),
+            inserted_at: NaiveDateTime.utc_now()
+          },
+          params
+        )
       end
     end
   end

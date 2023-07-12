@@ -20,7 +20,7 @@ defmodule GoBillManager.Models.EmployeeTest do
 
       assert %{
                name: ["is invalid"],
-               role: ["is invalid"],
+               role: ["is invalid"]
              } == errors_on(changeset)
     end
 
