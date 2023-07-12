@@ -12,13 +12,13 @@ defmodule GoBillManager.Models.Bill do
 
   @type t() :: %__MODULE__{}
 
-  @state ~w(open close)a
+  @states ~w(open close)a
   @castable_fields ~w(total_price state employee_id)a
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "bills" do
     field :total_price, :integer
-    field :state, Ecto.Enum, values: @state
+    field :state, Ecto.Enum, values: @states
 
     belongs_to(:employee, Employee, type: Ecto.UUID)
     has_one(:customer, Customer)

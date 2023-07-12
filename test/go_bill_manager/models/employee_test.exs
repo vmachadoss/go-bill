@@ -1,10 +1,10 @@
-defmodule GoBillManager.Bill.Models.EmployeeTest do
+defmodule GoBillManager.Models.EmployeeTest do
   use GoBillManager.DataCase
 
-  alias GoBillManager.Bill.Models.Employee
+  alias GoBillManager.Models.Employee
 
   describe "changeset/2" do
-    test "should return invalid changeset when missin required params" do
+    test "should return invalid changeset when missing required params" do
       assert %Ecto.Changeset{valid?: false} = changeset = Employee.changeset(%{})
 
       assert %{
@@ -14,27 +14,18 @@ defmodule GoBillManager.Bill.Models.EmployeeTest do
     end
 
     test "should return invalid changeset when params are invalid" do
-      employee_params = %{
-        name: 123,
-        role: "invalid",
-        bill: "invalid"
-      }
+      employee_params = params_for(:employee, name: 123, role: "invalid")
 
       assert %Ecto.Changeset{valid?: false} = changeset = Employee.changeset(employee_params)
 
       assert %{
                name: ["is invalid"],
                role: ["is invalid"],
-               bill: ["is invalid"]
              } == errors_on(changeset)
     end
 
     test "should return valid changeset when params are valid" do
-      employee_params = %{
-        name: "Robertinho",
-        role: "manager"
-      }
-
+      employee_params = params_for(:employee)
       assert %Ecto.Changeset{changes: changes, valid?: true} = Employee.changeset(employee_params)
 
       assert employee_params.name == changes.name

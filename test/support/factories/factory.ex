@@ -4,6 +4,6 @@ defmodule GoBillManager.Factory do
   use ExMachina.Ecto, repo: GoBillManager.Repo
 
   use GoBillManager.BillFactory
-  use GoBillManager.BoardFactory
   use GoBillManager.EmployeeFactory
+  use GoBillManager.ProductFactory
 end
