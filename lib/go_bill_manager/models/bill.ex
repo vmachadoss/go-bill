@@ -20,7 +20,7 @@ defmodule GoBillManager.Models.Bill do
     field :total_price, :integer
     field :state, Ecto.Enum, values: @states
 
-    belongs_to(:employee, Employee, type: Ecto.UUID)
+    belongs_to(:employee, Employee, foreign_key: :employee_id, type: Ecto.UUID)
     has_one(:customer, Customer)
     timestamps()
   end

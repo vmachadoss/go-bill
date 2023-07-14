@@ -30,8 +30,16 @@ defmodule GoBillManager.Models.BillTest do
              } == errors_on(changeset)
     end
 
+    test "should return error changeset for constraint error employee_id" do
+      bill_params = params_for(:bill, employee_id: Ecto.UUID.generate())
+      assert {:error, changeset} = bill_params |> Bill.changeset() |> Repo.insert()
+
+      assert errors_on(changeset) == %{employee_id: ["does not exist"]}
+    end
+
     test "should return valid changeset when params are valid" do
-      bill_params = string_params_for(:bill)
+      %{id: employee_id} = insert(:employee)
+      bill_params = string_params_for(:bill, employee_id: employee_id)
       assert %Ecto.Changeset{changes: changes, valid?: true} = Bill.changeset(bill_params)
 
       assert bill_params["total_price"] == changes.total_price

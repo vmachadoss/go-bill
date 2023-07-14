@@ -16,8 +16,8 @@ defmodule GoBillManager.Models.Customer do
   schema "customers" do
     field :name, :string
 
-    belongs_to(:bill, Bill, type: Ecto.UUID)
-    belongs_to(:customer_table, CustomerTable, type: Ecto.UUID)
+    belongs_to(:bill, Bill, foreign_key: :bill_id, type: Ecto.UUID)
+    belongs_to(:customer_table, CustomerTable, foreign_key: :customer_table_id, type: Ecto.UUID)
 
     timestamps(updated_at: false)
   end
@@ -28,6 +28,7 @@ defmodule GoBillManager.Models.Customer do
     |> cast(params, [:name])
     |> validate_required([:name])
     |> foreign_key_constraint(:customer_table_id, name: :customers_table_id_fk)
+    |> foreign_key_constraint(:bill_id, name: :bill_id_fk)
     |> unique_constraint([:bill_id], name: :customers_bill_unique_index)
   end
 end
