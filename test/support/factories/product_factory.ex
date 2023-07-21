@@ -17,7 +17,13 @@ defmodule GoBillManager.ProductFactory do
       end
 
       def product_bill_factory do
-        %ProductBill{}
+        %ProductBill{
+          id: Ecto.UUID.generate(),
+          bill_id: Ecto.UUID.generate(),
+          product_id: Ecto.UUID.generate(),
+          inserted_at: NaiveDateTime.utc_now(),
+          updated_at: NaiveDateTime.utc_now()
+        }
       end
     end
   end

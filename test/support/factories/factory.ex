@@ -6,4 +6,5 @@ defmodule GoBillManager.Factory do
   use GoBillManager.BillFactory
   use GoBillManager.EmployeeFactory
   use GoBillManager.ProductFactory
+  use GoBillManager.CustomerFactory
 end

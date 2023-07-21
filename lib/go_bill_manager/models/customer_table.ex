@@ -10,15 +10,16 @@ defmodule GoBillManager.Models.CustomerTable do
 
   @type t() :: %__MODULE__{}
 
-  @state ~w(occupied available)a
+  @states ~w(occupied available)a
 
   @required_fields ~w(state)a
-  @fields ~w(label status)a
+  @fields ~w(label state)a
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "customer_tables" do
+    # TODO - label deveria ser uniq?
     field :label, :integer
-    field :state, Ecto.Enum, values: @state
+    field :state, Ecto.Enum, values: @states
 
     has_many(:customers, Customer, foreign_key: :customer_table_id)
     timestamps(updated_at: false)
