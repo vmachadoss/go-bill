@@ -11,7 +11,7 @@ defmodule GoBillManager.Models.CustomerTableTest do
     end
 
     test "should return invalid changeset when params are invalid" do
-      customer_table_params = params_for(:customer_table, label: "invalid", state: -1)
+      customer_table_params = params_for(:customer_table, label: -1, state: -1)
 
       assert %Ecto.Changeset{valid?: false} = changeset = CustomerTable.changeset(customer_table_params)
 
@@ -28,7 +28,7 @@ defmodule GoBillManager.Models.CustomerTableTest do
                CustomerTable.changeset(customer_table_params)
 
       assert customer_table_params.label == changes.label
-      assert customer_table_params.state == Atom.to_string(changes.state)
+      assert customer_table_params.state == changes.state
     end
   end
 end

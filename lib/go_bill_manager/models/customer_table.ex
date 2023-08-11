@@ -18,7 +18,7 @@ defmodule GoBillManager.Models.CustomerTable do
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "customer_tables" do
     # TODO - label deveria ser uniq?
-    field :label, :integer
+    field :label, :string
     field :state, Ecto.Enum, values: @states
 
     has_many(:customers, Customer, foreign_key: :customer_table_id)

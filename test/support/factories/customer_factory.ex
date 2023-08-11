@@ -23,8 +23,8 @@ defmodule GoBillManager.CustomerFactory do
         merge_attributes(
           %CustomerTable{
             id: Ecto.UUID.generate(),
-            label: 1,
-            state: "available",
+            label: "1",
+            state: :available,
             inserted_at: NaiveDateTime.utc_now()
           },
           params

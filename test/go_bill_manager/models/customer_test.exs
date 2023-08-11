@@ -13,8 +13,7 @@ defmodule GoBillManager.Models.CustomerTest do
     test "should return invalid changeset when params are invalid" do
       customer_params = params_for(:customer, name: -1)
 
-      assert %Ecto.Changeset{valid?: false} =
-               changeset = Customer.changeset(customer_params)
+      assert %Ecto.Changeset{valid?: false} = changeset = Customer.changeset(customer_params)
 
       assert %{name: ["is invalid"]} == errors_on(changeset)
     end
@@ -22,8 +21,7 @@ defmodule GoBillManager.Models.CustomerTest do
     test "should return valid changeset when params are valid" do
       customer_params = params_for(:customer)
 
-      assert %Ecto.Changeset{changes: changes, valid?: true} =
-               Customer.changeset(customer_params)
+      assert %Ecto.Changeset{changes: changes, valid?: true} = Customer.changeset(customer_params)
 
       assert customer_params.name == changes.name
     end

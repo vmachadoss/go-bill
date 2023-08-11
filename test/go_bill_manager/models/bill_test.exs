@@ -2,6 +2,7 @@ defmodule GoBillManager.Models.BillTest do
   use GoBillManager.DataCase, async: false
 
   alias GoBillManager.Models.Bill
+  alias GoBillManager.Repo
 
   describe "changeset/2" do
     test "should return invalid changeset when missing required params" do
@@ -45,6 +46,14 @@ defmodule GoBillManager.Models.BillTest do
       assert bill_params["total_price"] == changes.total_price
       assert bill_params["state"] == Atom.to_string(changes.state)
       assert bill_params["employee_id"] == changes.employee_id
+    end
+
+    test "should return foreign key error employee id" do
+      bill_params = string_params_for(:bill, employee_id: Ecto.UUID.generate())
+
+      assert {:error, changeset} = Bill.changeset(bill_params) |> Repo.insert()
+
+      assert %{employee_id: ["does not exist"]} = errors_on(changeset)
     end
   end
 end
