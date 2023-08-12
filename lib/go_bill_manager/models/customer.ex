@@ -22,8 +22,8 @@ defmodule GoBillManager.Models.Customer do
     timestamps(updated_at: false)
   end
 
-  @spec changeset(module :: t(), params :: map()) :: Ecto.Changeset.t()
-  def changeset(module \\ %__MODULE__{}, params) do
+  @spec create_changeset(module :: t(), params :: map()) :: Ecto.Changeset.t()
+  def create_changeset(module \\ %__MODULE__{}, params) do
     module
     |> cast(params, [:name])
     |> validate_required([:name])

@@ -5,7 +5,7 @@ defmodule GoBillManager.Models.ProductTest do
 
   describe "changeset/2" do
     test "should return invalid changeset when missing required params" do
-      assert %Ecto.Changeset{valid?: false} = changeset = Product.changeset(%{})
+      assert %Ecto.Changeset{valid?: false} = changeset = Product.create_changeset(%{})
 
       assert %{
                name: ["can't be blank"],
@@ -17,7 +17,7 @@ defmodule GoBillManager.Models.ProductTest do
     test "should return invalid changeset when params are invalid" do
       product_params = params_for(:product, name: -1, retail_price: "invalid", description: -1)
 
-      assert %Ecto.Changeset{valid?: false} = changeset = Product.changeset(product_params)
+      assert %Ecto.Changeset{valid?: false} = changeset = Product.create_changeset(product_params)
 
       assert %{
                name: ["is invalid"],
@@ -28,7 +28,7 @@ defmodule GoBillManager.Models.ProductTest do
 
     test "should return valid changeset when params are valid" do
       product_params = params_for(:product)
-      assert %Ecto.Changeset{changes: changes, valid?: true} = Product.changeset(product_params)
+      assert %Ecto.Changeset{changes: changes, valid?: true} = Product.create_changeset(product_params)
 
       assert product_params.name == changes.name
       assert product_params.description == changes.description
