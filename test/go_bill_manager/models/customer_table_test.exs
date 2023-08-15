@@ -13,7 +13,8 @@ defmodule GoBillManager.Models.CustomerTableTest do
     test "should return invalid changeset when params are invalid" do
       customer_table_params = params_for(:customer_table, label: -1, state: -1)
 
-      assert %Ecto.Changeset{valid?: false} = changeset = CustomerTable.create_changeset(customer_table_params)
+      assert %Ecto.Changeset{valid?: false} =
+               changeset = CustomerTable.create_changeset(customer_table_params)
 
       assert %{
                label: ["is invalid"],

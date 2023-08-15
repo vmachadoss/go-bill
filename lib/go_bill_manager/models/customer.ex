@@ -24,9 +24,11 @@ defmodule GoBillManager.Models.Customer do
 
   @spec create_changeset(module :: t(), params :: map()) :: Ecto.Changeset.t()
   def create_changeset(module \\ %__MODULE__{}, params) do
+    fields = __schema__(:fields) -- [:id, :inserted_at]
+
     module
-    |> cast(params, [:name])
-    |> validate_required([:name])
+    |> cast(params, fields)
+    |> validate_required(fields)
     |> foreign_key_constraint(:customer_table_id, name: :customers_table_id_fk)
     |> foreign_key_constraint(:bill_id, name: :bill_id_fk)
     |> unique_constraint([:bill_id], name: :customers_bill_unique_index)

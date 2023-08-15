@@ -28,7 +28,9 @@ defmodule GoBillManager.Models.ProductTest do
 
     test "should return valid changeset when params are valid" do
       product_params = params_for(:product)
-      assert %Ecto.Changeset{changes: changes, valid?: true} = Product.create_changeset(product_params)
+
+      assert %Ecto.Changeset{changes: changes, valid?: true} =
+               Product.create_changeset(product_params)
 
       assert product_params.name == changes.name
       assert product_params.description == changes.description

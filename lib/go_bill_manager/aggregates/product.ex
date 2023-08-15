@@ -14,7 +14,8 @@ defmodule GoBillManager.Aggregates.Product do
     |> Repo.insert()
   end
 
-  @spec create_product_bill(params :: map()) :: {:ok, ProductBill.t()} | {:error, Ecto.Changeset.t()}
+  @spec create_product_bill(params :: map()) ::
+          {:ok, ProductBill.t()} | {:error, Ecto.Changeset.t()}
   def create_product_bill(params) do
     params
     |> ProductBill.create_changeset()
