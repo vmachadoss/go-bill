@@ -30,7 +30,7 @@ defmodule GoBillManager.Models.Customer do
     |> cast(params, fields)
     |> validate_required(fields)
     |> foreign_key_constraint(:customer_table_id, name: :customers_table_id_fk)
-    |> foreign_key_constraint(:bill_id, name: :bill_id_fk)
+    |> foreign_key_constraint(:bill_id, name: :bills_id_fk)
     |> unique_constraint([:bill_id], name: :customers_bill_unique_index)
   end
 end

@@ -7,7 +7,11 @@ defmodule GoBillManager.Models.CustomerTest do
     test "should return invalid changeset when missing required params" do
       assert %Ecto.Changeset{valid?: false} = changeset = Customer.create_changeset(%{})
 
-      assert %{name: ["can't be blank"]} == errors_on(changeset)
+      assert %{
+               name: ["can't be blank"],
+               bill_id: ["can't be blank"],
+               customer_table_id: ["can't be blank"]
+             } == errors_on(changeset)
     end
 
     test "should return invalid changeset when params are invalid" do

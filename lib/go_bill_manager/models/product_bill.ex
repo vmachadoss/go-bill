@@ -27,7 +27,7 @@ defmodule GoBillManager.Models.ProductBill do
     module
     |> cast(params, @fields)
     |> validate_required(@fields)
-    |> foreign_key_constraint(:bill_id, name: :bill_id_fk)
-    |> foreign_key_constraint(:product_id, name: :product_id_fk)
+    |> foreign_key_constraint(:bill_id, name: :bills_id_fk)
+    |> foreign_key_constraint(:product_id, name: :products_id_fk)
   end
 end
