@@ -3,9 +3,9 @@ defmodule GoBillManager.Models.EmployeeTest do
 
   alias GoBillManager.Models.Employee
 
-  describe "changeset/2" do
+  describe "create_changeset/2" do
     test "should return invalid changeset when missing required params" do
-      assert %Ecto.Changeset{valid?: false} = changeset = Employee.changeset(%{})
+      assert %Ecto.Changeset{valid?: false} = changeset = Employee.create_changeset(%{})
 
       assert %{
                name: ["can't be blank"],
@@ -16,7 +16,8 @@ defmodule GoBillManager.Models.EmployeeTest do
     test "should return invalid changeset when params are invalid" do
       employee_params = params_for(:employee, name: 123, role: "invalid")
 
-      assert %Ecto.Changeset{valid?: false} = changeset = Employee.changeset(employee_params)
+      assert %Ecto.Changeset{valid?: false} =
+               changeset = Employee.create_changeset(employee_params)
 
       assert %{
                name: ["is invalid"],
@@ -26,7 +27,9 @@ defmodule GoBillManager.Models.EmployeeTest do
 
     test "should return valid changeset when params are valid" do
       employee_params = params_for(:employee)
-      assert %Ecto.Changeset{changes: changes, valid?: true} = Employee.changeset(employee_params)
+
+      assert %Ecto.Changeset{changes: changes, valid?: true} =
+               Employee.create_changeset(employee_params)
 
       assert employee_params.name == changes.name
       assert employee_params.role == Atom.to_string(changes.role)

@@ -22,12 +22,12 @@ defmodule GoBillManager.Models.ProductBill do
     timestamps()
   end
 
-  @spec changeset(module :: t(), params :: map()) :: Ecto.Changeset.t()
-  def changeset(module \\ %__MODULE__{}, params) do
+  @spec create_changeset(module :: t(), params :: map()) :: Ecto.Changeset.t()
+  def create_changeset(module \\ %__MODULE__{}, params) do
     module
     |> cast(params, @fields)
     |> validate_required(@fields)
-    |> foreign_key_constraint(:bill_id, name: :bill_id_fk)
-    |> foreign_key_constraint(:product_id, name: :product_id_fk)
+    |> foreign_key_constraint(:bill_id, name: :bills_id_fk)
+    |> foreign_key_constraint(:product_id, name: :products_id_fk)
   end
 end
