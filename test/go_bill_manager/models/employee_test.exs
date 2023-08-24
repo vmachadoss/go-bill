@@ -3,7 +3,7 @@ defmodule GoBillManager.Models.EmployeeTest do
 
   alias GoBillManager.Models.Employee
 
-  describe "changeset/2" do
+  describe "create_changeset/2" do
     test "should return invalid changeset when missing required params" do
       assert %Ecto.Changeset{valid?: false} = changeset = Employee.create_changeset(%{})
 

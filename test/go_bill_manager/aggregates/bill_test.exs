@@ -37,10 +37,16 @@ defmodule GoBillManager.Aggregates.BillTest do
 
     test "should return valid changeset when params are valid" do
       %{id: employee_id} = insert(:employee)
-      bill_params = string_params_for(:bill, employee_id: employee_id)
-      assert {:ok, %Bill{}} = BillAggregate.create(bill_params)
+
+      %{total_price: total_price, state: state} =
+        bill_params = params_for(:bill, employee_id: employee_id)
+
+      assert {:ok, %Bill{} = bill_response} =
+               BillAggregate.create(bill_params)
 
       assert Repo.aggregate(Bill, :count, :id) == 1
+      assert state == Atom.to_string(bill_response.state)
+      assert total_price == bill_response.total_price
     end
   end
 end

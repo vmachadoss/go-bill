@@ -3,7 +3,7 @@ defmodule GoBillManager.Models.ProductTest do
 
   alias GoBillManager.Models.Product
 
-  describe "changeset/2" do
+  describe "create_changeset/2" do
     test "should return invalid changeset when missing required params" do
       assert %Ecto.Changeset{valid?: false} = changeset = Product.create_changeset(%{})
 
