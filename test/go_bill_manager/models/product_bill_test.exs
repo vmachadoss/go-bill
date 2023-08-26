@@ -54,7 +54,7 @@ defmodule GoBillManager.Models.ProductBillTest do
                 %Ecto.Changeset{
                   valid?: false,
                   errors: ^error_message
-                }} = ProductBill.create_changeset(product_bill_params) |> Repo.insert()
+                }} = product_bill_params |> ProductBill.create_changeset() |> Repo.insert()
       end
     end)
   end

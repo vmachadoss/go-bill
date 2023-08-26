@@ -7,8 +7,8 @@ defmodule GoBillManager.Models.Bill do
 
   import Ecto.Changeset
 
-  alias GoBillManager.Models.Employee
   alias GoBillManager.Models.Customer
+  alias GoBillManager.Models.Employee
 
   @type t() :: %__MODULE__{}
 

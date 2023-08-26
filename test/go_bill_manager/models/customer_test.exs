@@ -47,7 +47,7 @@ defmodule GoBillManager.Models.CustomerTest do
                 %Ecto.Changeset{
                   valid?: false,
                   errors: ^error_message
-                }} = Customer.create_changeset(customer_params) |> Repo.insert()
+                }} = customer_params |> Customer.create_changeset() |> Repo.insert()
       end
     end)
 

@@ -75,9 +75,11 @@ defmodule GoBillManager.Aggregates.CustomerTest do
 
   describe "create_table/1" do
     test "should return ok with valid params" do
-      %{"label" => label, "state" => state} = customer_table_params = string_params_for(:customer_table)
+      %{"label" => label, "state" => state} =
+        customer_table_params = string_params_for(:customer_table)
 
-      assert {:ok, %CustomerTable{} = customer_table_response} = CustomerAggregate.create_table(customer_table_params)
+      assert {:ok, %CustomerTable{} = customer_table_response} =
+               CustomerAggregate.create_table(customer_table_params)
 
       assert Repo.aggregate(CustomerTable, :count, :id) == 1
       assert label == customer_table_response.label
