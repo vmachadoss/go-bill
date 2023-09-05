@@ -21,6 +21,7 @@ defmodule GoBillManager.DataCase do
       alias GoBillManager.Repo
 
       import Ecto
+      import ExUnit.CaptureLog
       import Ecto.Changeset
       import Ecto.Query
       import GoBillManager.DataCase
