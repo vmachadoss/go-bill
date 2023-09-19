@@ -4,18 +4,25 @@ defmodule GoBillManagerWeb.EmployeeController do
   """
   use GoBillManagerWeb, :controller
 
-  alias GoBillManager.Aggregates.Employee, as: EmployeeAggregate
+  alias GoBillManager.Commands.EmployeeCreate
 
-  # transaction e command ?
-  # isolar a transação que vai inserir no banco.
-  
   @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def create(conn, params) do
-    with {:ok, employee} <- EmployeeAggregate.create(params) do
+    with {:ok, employee} <- EmployeeCreate.run(params) do
       render(conn, "create.json", %{employee: employee})
     else
-      {:error, %Ecto.Changeset{} = changeset} ->
-        handle_invalid_params()
+      # TODO - improve nos retornos de erro: required_params
+      {:error, %Ecto.Changeset{}} ->
+        parse_response_to_json(conn, 400, %{type: "error:invalid_params"})
+
+      {:error, reason} ->
+        {:error, reason}
     end
+  end
+
+  defp parse_response_to_json(conn, status, value) do
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(status, Jason.encode!(value))
   end
 end
