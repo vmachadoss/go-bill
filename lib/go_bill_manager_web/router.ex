@@ -8,7 +8,9 @@ defmodule GoBillManagerWeb.Router do
   scope "/api/v1", GoBillManagerWeb do
     pipe_through :api
 
-    resources "/employees", EmployeeController, as: :employees, only: [:create]
+    scope "/employees", as: :employees do
+      resources "/employee", EmployeeController, only: [:create], as: :employee, name: :employee
+    end
   end
 
   # Enables LiveDashboard only for development
