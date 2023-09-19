@@ -5,8 +5,12 @@ defmodule GoBillManagerWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", GoBillManagerWeb do
+  scope "/api/v1", GoBillManagerWeb do
     pipe_through :api
+
+    scope "/employees", as: :employees do
+      resources "/employee", EmployeeController, only: [:create], as: :employee, name: :employee
+    end
   end
 
   # Enables LiveDashboard only for development

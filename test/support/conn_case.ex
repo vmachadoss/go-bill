@@ -24,6 +24,7 @@ defmodule GoBillManagerWeb.ConnCase do
       import Phoenix.ConnTest
       import GoBillManagerWeb.ConnCase
       import GoBillManager.Factory
+      import ExUnit.CaptureLog
 
       alias GoBillManagerWeb.Router.Helpers, as: Routes
 

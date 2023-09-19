@@ -13,7 +13,8 @@ defmodule GoBillManager.Commands.EmployeeCreateTest do
     end
 
     test "should return error when params are invalid" do
-      {{:error, invalid_changeset}, log} = with_log(fn -> EmployeeCreate.run(%{"name" => -1, "role" => -1}) end)
+      {{:error, invalid_changeset}, log} =
+        with_log(fn -> EmployeeCreate.run(%{"name" => -1, "role" => -1}) end)
 
       assert errors_on(invalid_changeset) == %{name: ["is invalid"], role: ["is invalid"]}
       assert log =~ ~s/[error] Creation failed on step: employee_create, for reason: /
@@ -26,8 +27,7 @@ defmodule GoBillManager.Commands.EmployeeCreateTest do
         |> string_params_for()
         |> Map.take(["name", "role"])
 
-      assert {:ok, %{employee_create: %Employee{} = resp_employee}} =
-               EmployeeCreate.run(employee_params)
+      assert {:ok, %Employee{} = resp_employee} = EmployeeCreate.run(employee_params)
 
       assert employee_name == resp_employee.name
       assert employee_role == Atom.to_string(resp_employee.role)
