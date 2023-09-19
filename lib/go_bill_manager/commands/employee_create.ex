@@ -16,8 +16,8 @@ defmodule GoBillManager.Commands.EmployeeCreate do
     |> Multi.run(:employee_create, fn _, _ -> EmployeeAggregate.create(params) end)
     |> Repo.transaction(telemetry_options: [name: :employee_run_create])
     |> case do
-      {:ok, changes} ->
-        {:ok, changes}
+      {:ok, %{employee_create: employee}} ->
+        {:ok, employee}
 
       {:error, step, reason, _} ->
         Logger.error("Creation failed on step: #{step}, for reason: #{inspect(reason)}")
