@@ -9,7 +9,7 @@ defmodule GoBillManager.EmployeeFactory do
         merge_attributes(
           %Employee{
             id: Ecto.UUID.generate(),
-            name: "João Armless",
+            name: Enum.random(~w/João Armless Maria Joana Larissa Joaquina Maria Manoela/),
             role: Enum.random(~w/attendant manager/),
             inserted_at: NaiveDateTime.utc_now()
           },
