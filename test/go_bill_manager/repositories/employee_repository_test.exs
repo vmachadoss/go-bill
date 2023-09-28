@@ -40,11 +40,17 @@ defmodule GoBillManager.Repositories.EmployeeRepositoryTest do
       assert {:error, :employees_not_found} = EmployeeRepository.list_employees()
     end
 
-    # Validar ordenação por data
     test "should return employees" do
-      insert_list(10, :employee)
+      now = NaiveDateTime.utc_now()
+      %{id: employee_id1} = insert(:employee, inserted_at: now)
+      %{id: employee_id2} = insert(:employee, inserted_at: NaiveDateTime.add(now, 10))
+      %{id: employee_id3} = insert(:employee, inserted_at: NaiveDateTime.add(now, 20))
 
-      EmployeeRepository.list_employees() |> dbg()
+      assert {:ok, [
+               %Employee{id: ^employee_id3},
+               %Employee{id: ^employee_id2},
+               %Employee{id: ^employee_id1}
+             ]} = EmployeeRepository.list_employees() |> dbg()
     end
   end
 end
