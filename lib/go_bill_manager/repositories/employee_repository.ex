@@ -38,7 +38,7 @@ defmodule GoBillManager.Repositories.EmployeeRepository do
   def list_employees do
     Employee
     |> from(as: :employee)
-    |> order_by([e], asc: e.inserted_at)
+    |> order_by([e], desc: e.inserted_at)
     |> Repo.all(telemetry_options: [name: :employee_repository_list_employees])
     |> case do
       [] -> {:error, :employees_not_found}
