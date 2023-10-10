@@ -9,7 +9,10 @@ defmodule GoBillManagerWeb.Router do
     pipe_through :api
 
     scope "/employees", as: :employees do
-      resources "/employee", EmployeeController, only: [:create], as: :employee, name: :employee
+      resources "/employee", EmployeeController,
+        only: [:create, :index],
+        as: :employee,
+        name: :employee
     end
   end
 
