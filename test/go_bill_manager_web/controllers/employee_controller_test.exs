@@ -33,4 +33,26 @@ defmodule GoBillManagerWeb.EmployeeControllerTest do
       assert log =~ "[error] Creation failed on step: employee_create"
     end
   end
+
+  describe "GET /api/v1/employees/employee" do
+    test "should return a empty list when employees doesn't exists", %{conn: conn} do
+      conn = get(conn, Routes.employees_employee_path(conn, :index))
+      response = json_response(conn, 200)
+
+      assert conn.status == 200
+      assert response == []
+    end
+
+    test "should return employees list", %{conn: conn} do
+      now = NaiveDateTime.utc_now()
+      insert(:employee, inserted_at: now)
+      insert(:employee, inserted_at: NaiveDateTime.add(now, 10))
+      insert(:employee, inserted_at: NaiveDateTime.add(now, 20))
+      
+      conn = get(conn, Routes.employees_employee_path(conn, :index))
+      response = json_response(conn, 200)
+
+      assert length(response) == 3
+    end
+  end
 end

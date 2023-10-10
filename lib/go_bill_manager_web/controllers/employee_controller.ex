@@ -5,6 +5,7 @@ defmodule GoBillManagerWeb.EmployeeController do
   use GoBillManagerWeb, :controller
 
   alias GoBillManager.Commands.EmployeeCreate
+  alias GoBillManager.Repositories.EmployeeRepository
 
   @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def create(conn, params) do
@@ -19,6 +20,10 @@ defmodule GoBillManagerWeb.EmployeeController do
         {:error, reason}
     end
   end
+
+  @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def index(conn, _params),
+    do: render(conn, "index.json", %{employees: EmployeeRepository.list_employees()})
 
   defp parse_response_to_json(conn, status, value) do
     conn
