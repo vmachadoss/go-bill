@@ -7,4 +7,16 @@ defmodule GoBillManagerWeb.EmployeeView do
     |> Map.put(:employee_id, employee.id)
     |> Map.take([:employee_id, :name, :role])
   end
+
+  def render("index.json", %{employees: employees}) do
+    render_many(employees, __MODULE__, "simplified_employee.json", as: :employee)
+  end
+
+  def render("simplified_employee.json", %{employee: employee}) do
+    %{
+      id: employee.id,
+      name: employee.name,
+      role: employee.role
+    }
+  end
 end
