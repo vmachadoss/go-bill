@@ -34,15 +34,11 @@ defmodule GoBillManager.Repositories.EmployeeRepository do
     end
   end
 
-  @spec list_employees :: {:ok, list(Employee.t())} | {:error, :employees_not_found}
+  @spec list_employees :: list() | list(Employee.t())
   def list_employees do
     Employee
     |> from(as: :employee)
     |> order_by([e], desc: e.inserted_at)
     |> Repo.all(telemetry_options: [name: :employee_repository_list_employees])
-    |> case do
-      [] -> {:error, :employees_not_found}
-      employees -> {:ok, employees}
-    end
   end
 end
