@@ -7,8 +7,6 @@ defmodule GoBillManagerWeb.EmployeeController do
   alias GoBillManager.Commands.EmployeeCreate
   alias GoBillManager.Repositories.EmployeeRepository
 
-  require Logger
-
   @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def create(conn, params) do
     with {:ok, employee} <- EmployeeCreate.run(params) do
