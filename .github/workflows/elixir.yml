@@ -59,11 +59,9 @@ jobs:
 
       - name: Code Format
         run: mix format --check-formatted
-        
+
       - name: Compile project
-        run: |
-          MIX_ENV=dev mix compile --warnings-as-errors
-          MIX_ENV=test mix compile --warnings-as-errors
+        run: mix compile --warnings-as-errors
 
       - name: Test rollback
         run: |
