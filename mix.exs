@@ -34,7 +34,8 @@ defmodule GoBillManager.MixProject do
     [
       {:phoenix, "~> 1.6.12"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.6"},
+      {:ecto, "~> 3.9.0"},
+      {:ecto_sql, "~> 3.9"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_dashboard, "~> 0.6"},
       {:telemetry_metrics, "~> 0.6"},
