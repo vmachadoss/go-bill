@@ -37,7 +37,7 @@ defmodule GoBillManager.Repositories.EmployeeRepositoryTest do
 
   describe "list_employees/0" do
     test "should return error when employees doesn't exists" do
-      assert {:error, :employees_not_found} = EmployeeRepository.list_employees()
+      assert [] = EmployeeRepository.list_employees()
     end
 
     test "should return employees" do
@@ -46,12 +46,11 @@ defmodule GoBillManager.Repositories.EmployeeRepositoryTest do
       %{id: employee_id2} = insert(:employee, inserted_at: NaiveDateTime.add(now, 10))
       %{id: employee_id3} = insert(:employee, inserted_at: NaiveDateTime.add(now, 20))
 
-      assert {:ok,
-              [
-                %Employee{id: ^employee_id3},
-                %Employee{id: ^employee_id2},
-                %Employee{id: ^employee_id1}
-              ]} = EmployeeRepository.list_employees() |> dbg()
+      assert [
+               %Employee{id: ^employee_id3},
+               %Employee{id: ^employee_id2},
+               %Employee{id: ^employee_id1}
+             ] = EmployeeRepository.list_employees()
     end
   end
 end
