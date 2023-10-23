@@ -61,7 +61,7 @@ jobs:
         run: mix format --check-formatted
 
       - name: Compile project
-        run: mix compile
+        run: mix compile --warnings-as-errors
 
       - name: Test rollback
         run: |
