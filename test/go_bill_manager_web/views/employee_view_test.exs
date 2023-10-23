@@ -19,7 +19,7 @@ defmodule GoBillManagerWeb.EmployeeViewTest do
   describe "render/2 index.json" do
     test "with success response" do
       employee = insert(:employee)
-      
+
       assert employees = EmployeeRepository.list_employees()
 
       rendered_response = EmployeeView.render("index.json", %{employees: employees})
@@ -29,7 +29,7 @@ defmodule GoBillManagerWeb.EmployeeViewTest do
       assert resp_employee = Enum.at(rendered_response, 0)
       assert employee.id == resp_employee.id
       assert employee.name == resp_employee.name
-      assert employee.role == resp_employee.role 
+      assert employee.role == resp_employee.role
     end
 
     test "without employees" do
@@ -49,7 +49,7 @@ defmodule GoBillManagerWeb.EmployeeViewTest do
 
       assert employee.id == rendered_response.id
       assert employee.name == rendered_response.name
-      assert employee.role == rendered_response.role 
+      assert employee.role == rendered_response.role
     end
   end
 end

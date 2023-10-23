@@ -48,7 +48,7 @@ defmodule GoBillManagerWeb.EmployeeControllerTest do
       insert(:employee, inserted_at: now)
       insert(:employee, inserted_at: NaiveDateTime.add(now, 10))
       insert(:employee, inserted_at: NaiveDateTime.add(now, 20))
-      
+
       conn = get(conn, Routes.employees_employee_path(conn, :index))
       response = json_response(conn, 200)
 
