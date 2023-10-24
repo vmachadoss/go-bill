@@ -55,4 +55,35 @@ defmodule GoBillManagerWeb.EmployeeControllerTest do
       assert length(response) == 3
     end
   end
+
+  describe "GET /api/v1/employees/employee/:employee_id" do
+    test "should return 400 when employee_id doesn't an uuid", %{conn: conn} do
+      employee_id = -1
+
+      conn = get(conn, Routes.employees_employee_path(conn, :show, employee_id))
+      response = json_response(conn, 400)
+
+      assert %{"type" => "error:invalid_employee_id"} == response
+    end
+
+    test "should return 404 when employee doesn't exists", %{conn: conn} do
+      employee_id = Ecto.UUID.generate()
+
+      conn = get(conn, Routes.employees_employee_path(conn, :show, employee_id))
+      response = json_response(conn, 404)
+
+      assert %{"type" => "error:employee_not_found"} == response
+    end
+
+    test "should return an employee", %{conn: conn} do
+      %{id: employee_id, name: name, role: role} = insert(:employee)
+
+      conn = get(conn, Routes.employees_employee_path(conn, :show, employee_id))
+      response = json_response(conn, 200)
+
+      assert employee_id == Map.get(response, "id")
+      assert name == Map.get(response, "name")
+      assert Atom.to_string(role) == Map.get(response, "role")
+    end
+  end
 end

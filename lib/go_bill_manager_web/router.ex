@@ -10,7 +10,7 @@ defmodule GoBillManagerWeb.Router do
 
     scope "/employees", as: :employees do
       resources "/employee", EmployeeController,
-        only: [:create, :index],
+        only: [:create, :index, :show],
         as: :employee,
         name: :employee
     end
