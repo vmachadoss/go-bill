@@ -11,10 +11,10 @@ defmodule GoBillManager.Models.ProductBill do
   alias GoBillManager.Models.Product
 
   @type t() :: %__MODULE__{
-    id: Ecto.UUID.t() | nil,
-    bill_id: Ecto.UUID.t() | nil,
-    product_id: Ecto.UUID.t() | nil
-  }
+          id: Ecto.UUID.t() | nil,
+          bill_id: Ecto.UUID.t() | nil,
+          product_id: Ecto.UUID.t() | nil
+        }
 
   @fields ~w(bill_id product_id)a
 

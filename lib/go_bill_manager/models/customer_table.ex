@@ -11,10 +11,10 @@ defmodule GoBillManager.Models.CustomerTable do
   @type valid_states() :: :occupied | :available
 
   @type t() :: %__MODULE__{
-    id: Ecto.UUID.t() | nil,
-    state: valid_states() | nil,
-    label: String.t() | nil
-  }
+          id: Ecto.UUID.t() | nil,
+          state: valid_states() | nil,
+          label: String.t() | nil
+        }
 
   @states ~w(occupied available)a
 

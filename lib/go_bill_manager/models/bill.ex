@@ -12,11 +12,11 @@ defmodule GoBillManager.Models.Bill do
 
   @type valid_states() :: :open | :closed
   @type t() :: %__MODULE__{
-    id: Ecto.UUID.t() | nil,
-    total_price: integer() | nil,
-    state: valid_states() | nil,
-    employee_id: Ecto.UUID.t() | nil
-  }
+          id: Ecto.UUID.t() | nil,
+          total_price: integer() | nil,
+          state: valid_states() | nil,
+          employee_id: Ecto.UUID.t() | nil
+        }
 
   @states ~w(open close)a
   @castable_fields ~w(total_price state employee_id)a

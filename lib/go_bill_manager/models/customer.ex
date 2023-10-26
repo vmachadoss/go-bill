@@ -11,11 +11,11 @@ defmodule GoBillManager.Models.Customer do
   alias GoBillManager.Models.CustomerTable
 
   @type t() :: %__MODULE__{
-    id: Ecto.UUID.t() | nil,
-    name: String.t() | nil,
-    customer_table_id: Ecto.UUID.t() | nil,
-    bill_id: Ecto.UUID.t() | nil
-  }
+          id: Ecto.UUID.t() | nil,
+          name: String.t() | nil,
+          customer_table_id: Ecto.UUID.t() | nil,
+          bill_id: Ecto.UUID.t() | nil
+        }
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "customers" do

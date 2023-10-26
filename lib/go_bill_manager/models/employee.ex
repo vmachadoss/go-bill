@@ -11,10 +11,10 @@ defmodule GoBillManager.Models.Employee do
   @type valid_roles() :: :attendant | :manager
 
   @type t() :: %__MODULE__{
-    id: Ecto.UUID.t() | nil,
-    name: String.t() | nil,
-    role: valid_roles() | nil
-  }
+          id: Ecto.UUID.t() | nil,
+          name: String.t() | nil,
+          role: valid_roles() | nil
+        }
 
   @roles ~w(attendant manager)a
 

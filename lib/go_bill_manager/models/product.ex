@@ -8,11 +8,11 @@ defmodule GoBillManager.Models.Product do
   import Ecto.Changeset
 
   @type t() :: %__MODULE__{
-    id: Ecto.UUID.t() | nil,
-    name: String.t() | nil,
-    retail_price: integer() | nil,
-    description: String.t() | nil
-  }
+          id: Ecto.UUID.t() | nil,
+          name: String.t() | nil,
+          retail_price: integer() | nil,
+          description: String.t() | nil
+        }
 
   @fields ~w(name retail_price description)a
 
