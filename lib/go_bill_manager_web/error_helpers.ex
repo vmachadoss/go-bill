@@ -1,4 +1,5 @@
 defmodule GoBillManagerWeb.ErrorHelpers do
+  # credo:disable-for-this-file Credo.Check.Readability.Specs
   @moduledoc """
   Conveniences for translating and building error messages.
   """

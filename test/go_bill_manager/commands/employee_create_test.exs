@@ -1,8 +1,8 @@
 defmodule GoBillManager.Commands.EmployeeCreateTest do
   use GoBillManager.DataCase
 
-  alias GoBillManager.Models.Employee
   alias GoBillManager.Commands.EmployeeCreate
+  alias GoBillManager.Models.Employee
 
   describe "run/1" do
     test "should return error when params are required" do

@@ -1,4 +1,5 @@
 defmodule GoBillManagerWeb.Telemetry do
+  # credo:disable-for-this-file Credo.Check.Readability.Specs
   @moduledoc false
   use Supervisor
   import Telemetry.Metrics

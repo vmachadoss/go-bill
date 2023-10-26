@@ -3,10 +3,10 @@ defmodule GoBillManager.Commands.EmployeeCreate do
     Handle with creation and lifecycle of employee creation
   """
 
+  alias Ecto.Multi
   alias GoBillManager.Aggregates.Employee, as: EmployeeAggregate
   alias GoBillManager.Models.Employee
   alias GoBillManager.Repo
-  alias Ecto.Multi
 
   require Logger
 

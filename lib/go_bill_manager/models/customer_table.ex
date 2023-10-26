@@ -8,7 +8,13 @@ defmodule GoBillManager.Models.CustomerTable do
   import Ecto.Changeset
   alias GoBillManager.Models.Customer
 
-  @type t() :: %__MODULE__{}
+  @type valid_states() :: :occupied | :available
+
+  @type t() :: %__MODULE__{
+    id: Ecto.UUID.t() | nil,
+    state: valid_states() | nil,
+    label: String.t() | nil
+  }
 
   @states ~w(occupied available)a
 
