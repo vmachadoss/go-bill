@@ -1,6 +1,6 @@
 defmodule GoBillManagerWeb.EmployeeViewTest do
-  alias GoBillManager.Repositories.EmployeeRepository
   use GoBillManager.DataCase, async: true
+  alias GoBillManager.Repositories.EmployeeRepository
 
   alias GoBillManagerWeb.EmployeeView
 

@@ -8,7 +8,13 @@ defmodule GoBillManager.Models.Employee do
   import Ecto.Changeset
   alias GoBillManager.Models.Bill
 
-  @type t() :: %__MODULE__{}
+  @type valid_roles() :: :attendant | :manager
+
+  @type t() :: %__MODULE__{
+          id: Ecto.UUID.t() | nil,
+          name: String.t() | nil,
+          role: valid_roles() | nil
+        }
 
   @roles ~w(attendant manager)a
 
