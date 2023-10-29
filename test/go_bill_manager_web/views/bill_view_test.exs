@@ -8,7 +8,7 @@ defmodule GoBillManagerWeb.BillViewTest do
       %{id: employee_id} = insert(:employee)
       bill = insert(:bill, employee_id: employee_id)
 
-      rendered_response = BillView.render("bill_create.json", %{bill: bill})
+      rendered_response = BillView.render("create.json", %{bill: bill})
 
       assert bill.id == rendered_response.bill_id
       assert bill.total_price == rendered_response.total_price

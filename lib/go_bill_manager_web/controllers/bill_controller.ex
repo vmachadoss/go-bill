@@ -9,7 +9,7 @@ defmodule GoBillManagerWeb.BillController do
   @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def create(conn, params) do
     with {:ok, bill} <- BillCreate.run(params) do
-      render(conn, "bill_create.json", %{bill: bill})
+      render(conn, "create.json", %{bill: bill})
     else
       {:error, %Ecto.Changeset{}} ->
         parse_response_to_json(conn, 400, %{type: "error:invalid_params"})
