@@ -10,6 +10,6 @@ defmodule GoBillManager.Aggregates.Bill do
   def create(params) do
     params
     |> Bill.create_changeset()
-    |> Repo.insert()
+    |> Repo.insert(telemetry_options: [name: :bill_aggregate_create])
   end
 end
