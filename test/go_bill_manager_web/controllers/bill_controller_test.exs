@@ -35,7 +35,11 @@ defmodule GoBillManagerWeb.BillControllerTest do
     end
 
     test "should return error when employee not exists", ctx do
-      request_body = %{"employee_id" => Ecto.UUID.generate(), "total_price" => "invalid", "state" => 1}
+      request_body = %{
+        "employee_id" => Ecto.UUID.generate(),
+        "total_price" => "invalid",
+        "state" => 1
+      }
 
       {conn, log} =
         with_log(fn -> post(ctx.conn, Routes.bills_bill_path(ctx.conn, :create), request_body) end)
@@ -44,7 +48,9 @@ defmodule GoBillManagerWeb.BillControllerTest do
 
       assert response == %{"type" => "error:employee_not_found_or_exists"}
       assert conn.status == 404
-      assert log =~ "[error] Creation failed on step: verify_if_employee_exists, for reason: :employee_not_found"
+
+      assert log =~
+               "[error] Creation failed on step: verify_if_employee_exists, for reason: :employee_not_found"
     end
   end
 end
