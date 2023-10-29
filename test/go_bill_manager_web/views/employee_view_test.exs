@@ -1,7 +1,7 @@
 defmodule GoBillManagerWeb.EmployeeViewTest do
   use GoBillManager.DataCase, async: true
-  alias GoBillManager.Repositories.EmployeeRepository
 
+  alias GoBillManager.Repositories.EmployeeRepository
   alias GoBillManagerWeb.EmployeeView
 
   describe "render/2 create.json" do
