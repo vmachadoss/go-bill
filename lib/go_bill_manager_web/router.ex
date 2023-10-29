@@ -14,6 +14,13 @@ defmodule GoBillManagerWeb.Router do
         as: :employee,
         name: :employee
     end
+
+    scope "/bills", as: :bills do
+      resources "/bill", BillController,
+        only: [:create],
+        as: :bill,
+        name: :bill
+    end
   end
 
   # Enables LiveDashboard only for development
