@@ -11,8 +11,7 @@ defmodule GoBillManager.BillFactory do
             id: Ecto.UUID.generate(),
             total_price: Enum.random(1..999),
             state: Enum.random(~w/open close/),
-            employee_id: Ecto.UUID.generate(),
-            inserted_at: NaiveDateTime.utc_now()
+            employee_id: Ecto.UUID.generate()
           },
           params
         )
