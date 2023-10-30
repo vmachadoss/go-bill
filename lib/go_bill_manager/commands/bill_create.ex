@@ -6,8 +6,8 @@ defmodule GoBillManager.Commands.BillCreate do
   alias Ecto.Multi
   alias GoBillManager.Aggregates.Bill, as: BillAggregate
   alias GoBillManager.Models.Bill
-  alias GoBillManager.Repositories.EmployeeRepository
   alias GoBillManager.Repo
+  alias GoBillManager.Repositories.EmployeeRepository
 
   require Logger
 
