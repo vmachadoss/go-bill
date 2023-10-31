@@ -7,4 +7,13 @@ defmodule GoBillManagerWeb.BillView do
     |> Map.put(:bill_id, bill.id)
     |> Map.take([:bill_id, :total_price, :state])
   end
+
+  def render("simplified_bill.json", %{bill: bill}) do
+    %{
+      id: bill.id,
+      total_price: bill.total_price,
+      state: bill.state,
+      employee_id: bill.employee_id
+    }
+  end
 end
