@@ -5,6 +5,7 @@ defmodule GoBillManagerWeb.BillController do
   use GoBillManagerWeb, :controller
 
   alias GoBillManager.Commands.BillCreate
+  alias GoBillManager.Repositories.BillRepository
 
   @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def create(conn, params) do
@@ -22,9 +23,30 @@ defmodule GoBillManagerWeb.BillController do
     end
   end
 
+  @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def show(conn, %{"id" => id}) do
+    with {:ok, bill_id} <- validate_uuid(id),
+         {:ok, bill} <- BillRepository.find(bill_id) do
+      render(conn, "simplified_bill.json", %{bill: bill})
+    else
+      {:error, :invalid_uuid} ->
+        parse_response_to_json(conn, 400, %{type: "error:invalid_bill_id"})
+
+      {:error, :bill_not_found} ->
+        parse_response_to_json(conn, 404, %{type: "error:bill_not_found"})
+    end
+  end
+
   defp parse_response_to_json(conn, status, value) do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(status, Jason.encode!(value))
+  end
+
+  defp validate_uuid(bill_id) do
+    case Ecto.UUID.cast(bill_id) do
+      :error -> {:error, :invalid_uuid}
+      _ -> {:ok, bill_id}
+    end
   end
 end
