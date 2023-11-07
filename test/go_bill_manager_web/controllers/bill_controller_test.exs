@@ -1,17 +1,13 @@
 defmodule GoBillManagerWeb.BillControllerTest do
   use GoBillManagerWeb.ConnCase
 
-  setup do
-    %{id: employee_id} = insert(:employee)
-    bill = insert(:bill, employee_id: employee_id)
-    %{employee_id: employee_id, bill: bill}
-  end
-
   describe "POST /api/v1/bills/bill" do
     test "should return a map with bill_id, total_price and state when params are valid", ctx do
+      %{id: employee_id} = insert(:employee)
+
       request_body =
         :bill
-        |> string_params_for(employee_id: ctx.employee_id)
+        |> string_params_for(employee_id: employee_id)
         |> Map.take(["employee_id", "total_price", "state"])
 
       conn = post(ctx.conn, Routes.bills_bill_path(ctx.conn, :create), request_body)
@@ -22,7 +18,9 @@ defmodule GoBillManagerWeb.BillControllerTest do
     end
 
     test "should return error when params are invalid", ctx do
-      request_body = %{"employee_id" => ctx.employee_id, "total_price" => "invalid", "state" => 1}
+      %{id: employee_id} = insert(:employee)
+
+      request_body = %{"employee_id" => employee_id, "total_price" => "invalid", "state" => 1}
 
       {conn, log} =
         with_log(fn -> post(ctx.conn, Routes.bills_bill_path(ctx.conn, :create), request_body) end)
@@ -54,6 +52,29 @@ defmodule GoBillManagerWeb.BillControllerTest do
     end
   end
 
+  describe "GET /api/v1/bills/bill" do
+    test "should return a empty list when bills doesn't exists", %{conn: conn} do
+      conn = get(conn, Routes.bills_bill_path(conn, :index))
+      response = json_response(conn, 200)
+
+      assert conn.status == 200
+      assert response == []
+    end
+
+    test "should return bills list", %{conn: conn} do
+      now = NaiveDateTime.utc_now()
+      %{id: employee_id} = insert(:employee)
+      insert(:bill, inserted_at: now, employee_id: employee_id)
+      insert(:bill, inserted_at: NaiveDateTime.add(now, 10), employee_id: employee_id)
+      insert(:bill, inserted_at: NaiveDateTime.add(now, 20), employee_id: employee_id)
+
+      conn = get(conn, Routes.bills_bill_path(conn, :index))
+      response = json_response(conn, 200)
+
+      assert length(response) == 3
+    end
+  end
+
   describe "GET /api/v1/bills/bill/:bill_id" do
     test "should return 400 when bill_id doesn't an uuid", %{conn: conn} do
       bill_id = -1
@@ -74,13 +95,16 @@ defmodule GoBillManagerWeb.BillControllerTest do
     end
 
     test "should return a bill", ctx do
-      conn = get(ctx.conn, Routes.bills_bill_path(ctx.conn, :show, ctx.bill.id))
+      %{id: employee_id} = insert(:employee)
+      %{id: bill_id} = bill = insert(:bill, employee_id: employee_id)
+
+      conn = get(ctx.conn, Routes.bills_bill_path(ctx.conn, :show, bill_id))
       response = json_response(conn, 200)
 
-      assert ctx.bill.id == Map.get(response, "id")
-      assert ctx.bill.total_price == Map.get(response, "total_price")
-      assert Atom.to_string(ctx.bill.state) == Map.get(response, "state")
-      assert ctx.employee_id == Map.get(response, "employee_id")
+      assert bill_id == Map.get(response, "id")
+      assert bill.total_price == Map.get(response, "total_price")
+      assert Atom.to_string(bill.state) == Map.get(response, "state")
+      assert employee_id == Map.get(response, "employee_id")
     end
   end
 end
