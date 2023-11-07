@@ -17,7 +17,7 @@ defmodule GoBillManagerWeb.Router do
 
     scope "/bills", as: :bills do
       resources "/bill", BillController,
-        only: [:create, :show],
+        only: [:create, :index, :show],
         as: :bill,
         name: :bill
     end

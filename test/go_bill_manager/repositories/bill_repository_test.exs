@@ -4,20 +4,16 @@ defmodule GoBillManager.Repositories.BillRepositoryTest do
   alias GoBillManager.Models.Bill
   alias GoBillManager.Repositories.BillRepository
 
-  setup do
-    %{id: employee_id} = insert(:employee)
-    %{id: bill_id} = insert(:bill, employee_id: employee_id)
-
-    %{bill_id: bill_id}
-  end
-
   describe "find/1" do
     test "should return error when bill not exists" do
       bill_id = Ecto.UUID.generate()
       assert {:error, :bill_not_found} == BillRepository.find(bill_id)
     end
 
-    test "should return bill when exists", %{bill_id: bill_id} do
+    test "should return bill when exists" do
+      %{id: employee_id} = insert(:employee)
+      %{id: bill_id} = insert(:bill, employee_id: employee_id)
+
       assert {:ok, %Bill{id: ^bill_id}} = BillRepository.find(bill_id)
     end
   end
@@ -31,8 +27,35 @@ defmodule GoBillManager.Repositories.BillRepositoryTest do
       end
     end
 
-    test "should return bill when exists", %{bill_id: bill_id} do
+    test "should return bill when exists" do
+      %{id: employee_id} = insert(:employee)
+      %{id: bill_id} = insert(:bill, employee_id: employee_id)
+
       assert %Bill{id: ^bill_id} = BillRepository.find!(bill_id)
+    end
+  end
+
+  describe "list_bills/0" do
+    test "should return error when employees doesn't exists" do
+      assert [] = BillRepository.list_bills()
+    end
+
+    test "should return employees" do
+      %{id: employee_id} = insert(:employee)
+      now = NaiveDateTime.utc_now()
+      %{id: bill_id1} = insert(:bill, inserted_at: now, employee_id: employee_id)
+
+      %{id: bill_id2} =
+        insert(:bill, inserted_at: NaiveDateTime.add(now, 10), employee_id: employee_id)
+
+      %{id: bill_id3} =
+        insert(:bill, inserted_at: NaiveDateTime.add(now, 20), employee_id: employee_id)
+
+      assert [
+               %Bill{id: ^bill_id3},
+               %Bill{id: ^bill_id2},
+               %Bill{id: ^bill_id1}
+             ] = BillRepository.list_bills()
     end
   end
 end

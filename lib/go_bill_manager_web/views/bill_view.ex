@@ -8,6 +8,10 @@ defmodule GoBillManagerWeb.BillView do
     |> Map.take([:bill_id, :total_price, :state])
   end
 
+  def render("index.json", %{bills: bills}) do
+    render_many(bills, __MODULE__, "simplified_bill.json", as: :bill)
+  end
+
   def render("simplified_bill.json", %{bill: bill}) do
     %{
       id: bill.id,
