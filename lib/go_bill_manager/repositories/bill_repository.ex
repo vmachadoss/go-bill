@@ -2,6 +2,8 @@ defmodule GoBillManager.Repositories.BillRepository do
   @moduledoc """
   Repository responsible to get values about Bills
   """
+  import Ecto.Query
+
   alias GoBillManager.Models.Bill
   alias GoBillManager.Repo
 
@@ -29,5 +31,13 @@ defmodule GoBillManager.Repositories.BillRepository do
       {:ok, bill} ->
         bill
     end
+  end
+
+  @spec list_bills :: list() | list(Bill.t())
+  def list_bills do
+    Bill
+    |> from(as: :bill)
+    |> order_by([b], desc: b.inserted_at)
+    |> Repo.all(telemetry_options: [name: :bill_repository_list_bill])
   end
 end
