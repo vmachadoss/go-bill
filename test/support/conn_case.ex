@@ -28,6 +28,8 @@ defmodule GoBillManagerWeb.ConnCase do
 
       alias GoBillManagerWeb.Router.Helpers, as: Routes
 
+      use GoBillManagerWeb, :verified_routes
+
       # The default endpoint for testing
       @endpoint GoBillManagerWeb.Endpoint
     end

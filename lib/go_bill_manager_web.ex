@@ -49,6 +49,16 @@ defmodule GoBillManagerWeb do
 
       import Plug.Conn
       import Phoenix.Controller
+      unquote(verified_routes())
+    end
+  end
+
+  def verified_routes do
+    quote do
+      use Phoenix.VerifiedRoutes,
+        endpoint: GoBillManagerWeb.Endpoint,
+        router: GoBillManagerWeb.Router,
+        statics: []
     end
   end
 
@@ -67,6 +77,7 @@ defmodule GoBillManagerWeb do
       import GoBillManagerWeb.ErrorHelpers
       import GoBillManagerWeb.Gettext
       alias GoBillManagerWeb.Router.Helpers, as: Routes
+      unquote(verified_routes())
     end
   end
 
