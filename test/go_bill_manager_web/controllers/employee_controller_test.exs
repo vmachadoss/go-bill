@@ -10,7 +10,7 @@ defmodule GoBillManagerWeb.EmployeeControllerTest do
         |> string_params_for()
         |> Map.take(["name", "role"])
 
-      conn = post(conn, Routes.employees_employee_path(conn, :create), request_body)
+      conn = post(conn, ~p(/api/v1/employees/employee), request_body)
 
       response = json_response(conn, 200)
 
