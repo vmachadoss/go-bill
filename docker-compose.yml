@@ -8,3 +8,28 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - 5432:5432
+  grafana:
+    image: grafana/grafana:8.1.2
+    ports:
+      - 5000:3000
+    volumes:
+      - ./grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    depends_on:
+      - tempo
+  loki:
+    image: grafana/loki:2.3.0
+    ports:
+      - 3100:3100
+    command: -config.file=/etc/loki/local-config.yaml
+  tempo:
+    image: grafana/tempo:1.1.0
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes:
+      - ./tempo.yaml:/etc/tempo.yaml
+    ports:
+      - 8000:8000 # tempo
+      - 55681:55681 # otlp http
