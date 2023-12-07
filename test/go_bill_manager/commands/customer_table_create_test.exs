@@ -1,7 +1,7 @@
 defmodule GoBillManager.Commands.CustomerTableCreateTest do
   use GoBillManager.DataCase
 
-	alias GoBillManager.Commands.CustomerTableCreate
+  alias GoBillManager.Commands.CustomerTableCreate
   alias GoBillManager.Models.CustomerTable
 
   describe "run/1" do
@@ -27,7 +27,8 @@ defmodule GoBillManager.Commands.CustomerTableCreateTest do
         |> string_params_for()
         |> Map.take(["label", "state"])
 
-      assert {:ok, %CustomerTable{} = resp_customer_table} = CustomerTableCreate.run(customer_table_params)
+      assert {:ok, %CustomerTable{} = resp_customer_table} =
+               CustomerTableCreate.run(customer_table_params)
 
       assert customer_table_label == resp_customer_table.label
       assert customer_table_state == resp_customer_table.state

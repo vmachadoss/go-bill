@@ -12,7 +12,9 @@ defmodule GoBillManager.Commands.CustomerTableCreate do
   @spec run(params :: map()) :: {:ok, CustomerTable.t()} | {:error, Ecto.Changeset.t()}
   def run(params) do
     Multi.new()
-    |> Multi.run(:customer_table_create, fn _, _ -> CustomerTableAggregate.create_table(params) end)
+    |> Multi.run(:customer_table_create, fn _, _ ->
+      CustomerTableAggregate.create_table(params)
+    end)
     |> Repo.transaction(telemetry_options: [name: :customer_table_run_create])
     |> case do
       {:ok, %{customer_table_create: customer_table}} ->
