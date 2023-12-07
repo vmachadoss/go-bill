@@ -1,6 +1,6 @@
 defmodule GoBillManager.Commands.EmployeeCreate do
   @moduledoc """
-    Handle with creation and lifecycle of employee creation
+    Handle with creation and lifecycle of employee
   """
 
   alias Ecto.Multi
