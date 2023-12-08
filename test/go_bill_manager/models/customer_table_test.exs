@@ -29,7 +29,7 @@ defmodule GoBillManager.Models.CustomerTableTest do
                CustomerTable.create_changeset(customer_table_params)
 
       assert customer_table_params.label == changes.label
-      assert customer_table_params.state == changes.state
+      assert customer_table_params.state == Atom.to_string(changes.state)
     end
   end
 end

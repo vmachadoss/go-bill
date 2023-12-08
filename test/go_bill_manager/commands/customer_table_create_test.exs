@@ -31,7 +31,7 @@ defmodule GoBillManager.Commands.CustomerTableCreateTest do
                CustomerTableCreate.run(customer_table_params)
 
       assert customer_table_label == resp_customer_table.label
-      assert customer_table_state == resp_customer_table.state
+      assert customer_table_state == Atom.to_string(resp_customer_table.state)
     end
   end
 end
