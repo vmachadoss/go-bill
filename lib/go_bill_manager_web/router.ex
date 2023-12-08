@@ -21,6 +21,13 @@ defmodule GoBillManagerWeb.Router do
         as: :bill,
         name: :bill
     end
+
+    scope "/customer_tables", as: :customer_tables do
+      resources "/customer_table", CustomerTableController,
+        only: [:create],
+        as: :customer_table,
+        name: :customer_table
+    end
   end
 
   # Enables LiveDashboard only for development
