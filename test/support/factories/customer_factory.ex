@@ -24,7 +24,7 @@ defmodule GoBillManager.CustomerFactory do
           %CustomerTable{
             id: Ecto.UUID.generate(),
             label: "1",
-            state: :available,
+            state: "available",
             inserted_at: NaiveDateTime.utc_now()
           },
           params

@@ -83,7 +83,7 @@ defmodule GoBillManager.Aggregates.CustomerTest do
 
       assert Repo.aggregate(CustomerTable, :count, :id) == 1
       assert label == customer_table_response.label
-      assert state == customer_table_response.state
+      assert state == Atom.to_string(customer_table_response.state)
     end
 
     test "should return error when params are required" do
