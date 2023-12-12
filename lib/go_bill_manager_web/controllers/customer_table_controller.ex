@@ -20,6 +20,11 @@ defmodule GoBillManagerWeb.CustomerTableController do
     end
   end
 
+  @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def index(conn, _params),
+    do:
+      render(conn, "index.json", %{customer_table: CustomerTableRepository.list_customer_table()})
+
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
     with {:ok, customer_table_id} <- validate_uuid(id),
