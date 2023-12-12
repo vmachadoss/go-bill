@@ -2,6 +2,7 @@ defmodule GoBillManager.Repositories.CustomerTableRepository do
   @moduledoc """
   Repository responsible to get values about CustomerTable
   """
+  import Ecto.Query
 
   alias GoBillManager.Models.CustomerTable
   alias GoBillManager.Repo
@@ -31,5 +32,13 @@ defmodule GoBillManager.Repositories.CustomerTableRepository do
       {:ok, customer_table} ->
         customer_table
     end
+  end
+
+  @spec list_customer_tables :: list() | list(CustomerTable.t())
+  def list_customer_tables do
+    CustomerTable
+    |> from(as: :customer_table)
+    |> order_by([ct], desc: ct.inserted_at)
+    |> Repo.all(telemetry_options: [name: :employee_repository_list_customer_tables])
   end
 end

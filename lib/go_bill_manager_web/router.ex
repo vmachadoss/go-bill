@@ -24,7 +24,7 @@ defmodule GoBillManagerWeb.Router do
 
     scope "/customer_tables", as: :customer_tables do
       resources "/customer_table", CustomerTableController,
-        only: [:create, :show],
+        only: [:create, :show, :index],
         as: :customer_table,
         name: :customer_table
     end

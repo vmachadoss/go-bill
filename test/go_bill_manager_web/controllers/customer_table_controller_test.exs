@@ -41,6 +41,28 @@ defmodule GoBillManagerWeb.CustomerTableControllerTest do
     end
   end
 
+  describe "GET /api/v1/customer_tables/customer_table" do
+    test "should return a empty list when customer_tables doesn't exists", %{conn: conn} do
+      conn = get(conn, Routes.customer_tables_customer_table_path(conn, :index))
+      response = json_response(conn, 200)
+
+      assert conn.status == 200
+      assert response == []
+    end
+
+    test "should return customer_tables list", %{conn: conn} do
+      now = NaiveDateTime.utc_now()
+      insert(:customer_table, inserted_at: now)
+      insert(:customer_table, inserted_at: NaiveDateTime.add(now, 10))
+      insert(:customer_table, inserted_at: NaiveDateTime.add(now, 20))
+
+      conn = get(conn, Routes.customer_tables_customer_table_path(conn, :index))
+      response = json_response(conn, 200)
+
+      assert length(response) == 3
+    end
+  end
+
   describe "GET /api/v1/customer_tables/customer_table/:customer_table_id" do
     test "should return 400 when customer_table_id doesn't an uuid", %{conn: conn} do
       customer_table_id = -1

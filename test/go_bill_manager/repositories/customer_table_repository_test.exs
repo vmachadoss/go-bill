@@ -36,4 +36,23 @@ defmodule GoBillManager.Repositories.CustomerTableRepositoryTest do
                CustomerTableRepository.find!(customer_table_id)
     end
   end
+
+  describe "list_customer_tables/0" do
+    test "should return error when customer_table doesn't exists" do
+      assert [] = CustomerTableRepository.list_customer_tables()
+    end
+
+    test "should return customer_table" do
+      now = NaiveDateTime.utc_now()
+      %{id: customer_table_id1} = insert(:customer_table, inserted_at: now)
+      %{id: customer_table_id2} = insert(:customer_table, inserted_at: NaiveDateTime.add(now, 10))
+      %{id: customer_table_id3} = insert(:customer_table, inserted_at: NaiveDateTime.add(now, 20))
+
+      assert [
+               %CustomerTable{id: ^customer_table_id3},
+               %CustomerTable{id: ^customer_table_id2},
+               %CustomerTable{id: ^customer_table_id1}
+             ] = CustomerTableRepository.list_customer_tables()
+    end
+  end
 end
