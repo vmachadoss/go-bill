@@ -29,7 +29,7 @@ defmodule GoBillManager.Repositories.CustomerTableRepository do
         raise Ecto.NoResultsError, queryable: CustomerTable
 
       {:ok, customer_table} ->
-       customer_table
+        customer_table
     end
   end
 end
