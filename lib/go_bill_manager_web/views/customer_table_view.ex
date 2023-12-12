@@ -8,8 +8,10 @@ defmodule GoBillManagerWeb.CustomerTableView do
     |> Map.take([:customer_table_id, :label, :state])
   end
 
-  def render("index.json", %{customer_table: customer_table}) do
-    render_many(customer_table, __MODULE__, "simplified_customer_table.json", as: :customer_table)
+  def render("index.json", %{customer_tables: customer_tables}) do
+    render_many(customer_tables, __MODULE__, "simplified_customer_table.json",
+      as: :customer_table
+    )
   end
 
   def render("simplified_customer_table.json", %{customer_table: customer_table}) do

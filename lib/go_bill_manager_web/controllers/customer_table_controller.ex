@@ -23,7 +23,9 @@ defmodule GoBillManagerWeb.CustomerTableController do
   @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, _params),
     do:
-      render(conn, "index.json", %{customer_table: CustomerTableRepository.list_customer_table()})
+      render(conn, "index.json", %{
+        customer_tables: CustomerTableRepository.list_customer_tables()
+      })
 
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
