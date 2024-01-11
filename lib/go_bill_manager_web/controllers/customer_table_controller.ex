@@ -13,7 +13,7 @@ defmodule GoBillManagerWeb.CustomerTableController do
       render(conn, "create.json", %{customer_table: customer_table})
     else
       {:error, %Ecto.Changeset{}} ->
-        parse_response_to_json(conn, 400, %{type: "error:invalid_params"})
+        ErrorResponses.bad_request(conn, "invalid_params")
 
       {:error, reason} ->
         {:error, reason}
@@ -34,17 +34,11 @@ defmodule GoBillManagerWeb.CustomerTableController do
       render(conn, "simplified_customer_table.json", %{customer_table: customer_table})
     else
       {:error, :invalid_uuid} ->
-        parse_response_to_json(conn, 400, %{type: "error:invalid_customer_table_id"})
+        ErrorResponses.bad_request(conn, "invalid_customer_table_id")
 
       {:error, :customer_table_not_found} ->
-        parse_response_to_json(conn, 404, %{type: "error:customer_table_not_found"})
+        ErrorResponses.not_found(conn, "customer_table_not_found")
     end
-  end
-
-  defp parse_response_to_json(conn, status, value) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(status, Jason.encode!(value))
   end
 
   defp validate_uuid(customer_table_id) do

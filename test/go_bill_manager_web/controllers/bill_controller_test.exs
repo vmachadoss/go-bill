@@ -44,7 +44,7 @@ defmodule GoBillManagerWeb.BillControllerTest do
 
       response = json_response(conn, 404)
 
-      assert response == %{"type" => "error:employee_not_found_or_exists"}
+      assert response == %{"type" => "error:employee_not_found"}
       assert conn.status == 404
 
       assert log =~
