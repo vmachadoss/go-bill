@@ -13,10 +13,10 @@ defmodule GoBillManagerWeb.BillController do
       render(conn, "create.json", %{bill: bill})
     else
       {:error, %Ecto.Changeset{}} ->
-        parse_response_to_json(conn, 400, %{type: "error:invalid_params"})
+        ErrorResponses.bad_request(conn, "invalid_params")
 
       {:error, :employee_not_found} ->
-        parse_response_to_json(conn, 404, %{type: "error:employee_not_found_or_exists"})
+        ErrorResponses.not_found(conn, "employee_not_found")
 
       {:error, reason} ->
         {:error, reason}
@@ -33,17 +33,11 @@ defmodule GoBillManagerWeb.BillController do
       render(conn, "simplified_bill.json", %{bill: bill})
     else
       {:error, :invalid_uuid} ->
-        parse_response_to_json(conn, 400, %{type: "error:invalid_bill_id"})
+        ErrorResponses.bad_request(conn, "invalid_bill_id")
 
       {:error, :bill_not_found} ->
-        parse_response_to_json(conn, 404, %{type: "error:bill_not_found"})
+        ErrorResponses.not_found(conn, "bill_not_found")
     end
-  end
-
-  defp parse_response_to_json(conn, status, value) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(status, Jason.encode!(value))
   end
 
   defp validate_uuid(bill_id) do
