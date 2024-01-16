@@ -1,6 +1,6 @@
 defmodule GoBillManagerWeb.CustomerTableController do
   @moduledoc """
-    Exposes an API interface to create, show and list customer table1 data
+    Exposes an API interface to create, show and list customer table data
   """
   use GoBillManagerWeb, :controller
 
