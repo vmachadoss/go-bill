@@ -1,7 +1,6 @@
 defmodule GoBillManager.Repositories.CustomerTableRepositoryTest do
   use GoBillManager.DataCase, async: true
 
-  alias GoBillManager.Aggregates.CustomerTable
   alias GoBillManager.Models.CustomerTable
   alias GoBillManager.Repositories.CustomerTableRepository
 
