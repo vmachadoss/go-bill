@@ -9,9 +9,7 @@ defmodule GoBillManagerWeb.CustomerView do
   end
 
   def render("index.json", %{customers: customers}) do
-    render_many(customers, __MODULE__, "simplified_customer.json",
-      as: :customer
-    )
+    render_many(customers, __MODULE__, "simplified_customer.json", as: :customer)
   end
 
   def render("simplified_customer.json", %{customer: customer}) do
