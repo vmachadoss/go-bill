@@ -4,15 +4,6 @@ defmodule GoBillManager.Repositories.CustomerRepositoryTest do
   alias GoBillManager.Models.Customer
   alias GoBillManager.Repositories.CustomerRepository
 
-  setup do
-    %{id: employee_id} = insert(:employee)
-    %{id: bill_id} = insert(:bill, employee_id: employee_id)
-    %{id: customer_table_id} = insert(:customer_table)
-    %{id: customer_id} = insert(:customer, customer_table_id: customer_table_id, bill_id: bill_id)
-
-    %{customer_id: customer_id}
-  end
-
   describe "find/1" do
     test "should return error when customer not exists" do
       customer_id = Ecto.UUID.generate()
@@ -20,8 +11,15 @@ defmodule GoBillManager.Repositories.CustomerRepositoryTest do
       assert {:error, :customer_not_found} = CustomerRepository.find(customer_id)
     end
 
-    test "should return customer when exists", context do
-      assert {:ok, %Customer{}} = CustomerRepository.find(context.customer_id)
+    test "should return customer when exists" do
+      %{id: employee_id} = insert(:employee)
+      %{id: bill_id} = insert(:bill, employee_id: employee_id)
+      %{id: customer_table_id} = insert(:customer_table)
+
+      %{id: customer_id} =
+        insert(:customer, customer_table_id: customer_table_id, bill_id: bill_id)
+
+      assert {:ok, %Customer{}} = CustomerRepository.find(customer_id)
     end
   end
 
@@ -34,14 +32,21 @@ defmodule GoBillManager.Repositories.CustomerRepositoryTest do
       end
     end
 
-    test "should return customer when exists", context do
-      assert %Customer{} = CustomerRepository.find!(context.customer_id)
+    test "should return customer when exists" do
+      %{id: employee_id} = insert(:employee)
+      %{id: bill_id} = insert(:bill, employee_id: employee_id)
+      %{id: customer_table_id} = insert(:customer_table)
+
+      %{id: customer_id} =
+        insert(:customer, customer_table_id: customer_table_id, bill_id: bill_id)
+
+      assert %Customer{} = CustomerRepository.find!(customer_id)
     end
   end
 
   describe "list_customers/0" do
     test "should return error when customer doesn't exists" do
-      assert [] = CustomerRepository.list_customers()
+      assert [] == CustomerRepository.list_customers()
     end
 
     test "should return customer" do
