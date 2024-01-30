@@ -9,8 +9,8 @@ defmodule GoBillManagerWeb.CustomerController do
 
   @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def create(conn, params) do
-    with {:ok, customer_table} <- CustomerCreate.run(params) do
-      render(conn, "create.json", %{customer_table: customer_table})
+    with {:ok, customer} <- CustomerCreate.run(params) do
+      render(conn, "create.json", %{customer: customer})
     else
       {:error, %Ecto.Changeset{}} ->
         ErrorResponses.bad_request(conn, "invalid_params")
@@ -24,12 +24,12 @@ defmodule GoBillManagerWeb.CustomerController do
   def index(conn, _params),
     do:
       render(conn, "index.json", %{
-        customer_tables: CustomerRepository.list_customers()
+        customers: CustomerRepository.list_customers()
       })
 
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
-    with {:ok, customer_id} <- validate_uuid(id),
+    with {:ok, customer_id} <- EctoUtils.validate_uuid(id),
          {:ok, customer} <- CustomerRepository.find(customer_id) do
       render(conn, "simplified_customer.json", %{customer: customer})
     else
@@ -38,13 +38,6 @@ defmodule GoBillManagerWeb.CustomerController do
 
       {:error, :customer_not_found} ->
         ErrorResponses.not_found(conn, "customer_not_found")
-    end
-  end
-
-  defp validate_uuid(customer_id) do
-    case Ecto.UUID.cast(customer_id) do
-      :error -> {:error, :invalid_uuid}
-      _ -> {:ok, customer_id}
     end
   end
 end
