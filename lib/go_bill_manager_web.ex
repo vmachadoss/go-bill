@@ -24,8 +24,9 @@ defmodule GoBillManagerWeb do
 
       import Plug.Conn
       import GoBillManagerWeb.Gettext
-      alias GoBillManagerWeb.Router.Helpers, as: Routes
+      alias GoBillManager.Utils.EctoUtils
       alias GoBillManagerWeb.ErrorResponses
+      alias GoBillManagerWeb.Router.Helpers, as: Routes
     end
   end
 

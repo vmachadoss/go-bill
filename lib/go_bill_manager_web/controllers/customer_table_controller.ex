@@ -29,7 +29,7 @@ defmodule GoBillManagerWeb.CustomerTableController do
 
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
-    with {:ok, customer_table_id} <- validate_uuid(id),
+    with {:ok, customer_table_id} <- EctoUtils.validate_uuid(id),
          {:ok, customer_table} <- CustomerTableRepository.find(customer_table_id) do
       render(conn, "simplified_customer_table.json", %{customer_table: customer_table})
     else
@@ -38,13 +38,6 @@ defmodule GoBillManagerWeb.CustomerTableController do
 
       {:error, :customer_table_not_found} ->
         ErrorResponses.not_found(conn, "customer_table_not_found")
-    end
-  end
-
-  defp validate_uuid(customer_table_id) do
-    case Ecto.UUID.cast(customer_table_id) do
-      :error -> {:error, :invalid_uuid}
-      _ -> {:ok, customer_table_id}
     end
   end
 end

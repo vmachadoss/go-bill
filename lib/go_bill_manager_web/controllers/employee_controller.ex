@@ -26,7 +26,7 @@ defmodule GoBillManagerWeb.EmployeeController do
 
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
-    with {:ok, employee_id} <- validate_uuid(id),
+    with {:ok, employee_id} <- EctoUtils.validate_uuid(id),
          {:ok, employee} <- EmployeeRepository.find(employee_id) do
       render(conn, "simplified_employee.json", %{employee: employee})
     else
@@ -35,13 +35,6 @@ defmodule GoBillManagerWeb.EmployeeController do
 
       {:error, :employee_not_found} ->
         ErrorResponses.not_found(conn, "employee_not_found")
-    end
-  end
-
-  defp validate_uuid(employee_id) do
-    case Ecto.UUID.cast(employee_id) do
-      :error -> {:error, :invalid_uuid}
-      _ -> {:ok, employee_id}
     end
   end
 end
