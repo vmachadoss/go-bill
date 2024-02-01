@@ -28,7 +28,7 @@ defmodule GoBillManagerWeb.BillController do
 
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
-    with {:ok, bill_id} <- validate_uuid(id),
+    with {:ok, bill_id} <- EctoUtils.validate_uuid(id),
          {:ok, bill} <- BillRepository.find(bill_id) do
       render(conn, "simplified_bill.json", %{bill: bill})
     else
@@ -37,13 +37,6 @@ defmodule GoBillManagerWeb.BillController do
 
       {:error, :bill_not_found} ->
         ErrorResponses.not_found(conn, "bill_not_found")
-    end
-  end
-
-  defp validate_uuid(bill_id) do
-    case Ecto.UUID.cast(bill_id) do
-      :error -> {:error, :invalid_uuid}
-      _ -> {:ok, bill_id}
     end
   end
 end

@@ -39,6 +39,6 @@ defmodule GoBillManager.Repositories.CustomerTableRepository do
     CustomerTable
     |> from(as: :customer_table)
     |> order_by([ct], desc: ct.inserted_at)
-    |> Repo.all(telemetry_options: [name: :employee_repository_list_customer_tables])
+    |> Repo.all(telemetry_options: [name: :customer_table_repository_list_customer_tables])
   end
 end
