@@ -8,6 +8,11 @@ defmodule GoBillManager.MixProject do
       elixir: "~> 1.15.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
+      releases: [
+        go_bill_manager: [
+          applications: [opentelemetry: :temporary]
+        ]
+      ],
       aliases: aliases(),
       deps: deps()
     ]
@@ -45,7 +50,12 @@ defmodule GoBillManager.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:ex_machina, "~> 2.7.0", only: :test}
+      {:ex_machina, "~> 2.7.0", only: :test},
+      {:opentelemetry, "~> 1.3"},
+      {:opentelemetry_api, "~> 1.2"},
+      {:opentelemetry_exporter, "~> 1.6"},
+      {:opentelemetry_phoenix, "~> 1.1"},
+      {:opentelemetry_cowboy, "~> 0.2"},
     ]
   end
 
