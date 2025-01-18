@@ -14,4 +14,16 @@ defmodule GoBillManager.Utils.EctoUtilsTest do
       assert {:ok, ^valid_uuid} = EctoUtils.validate_uuid(valid_uuid)
     end
   end
+
+  describe "all_valid_uuids?/1" do
+    test "should return true when all uuids are valids" do
+      valid_uuids = [Ecto.UUID.autogenerate(), Ecto.UUID.autogenerate()]
+      assert true == EctoUtils.all_valid_uuids?(valid_uuids)
+    end
+
+    test "should return false when some uuid on list are invalid" do
+      valid_uuids = [Ecto.UUID.autogenerate(), Ecto.UUID.autogenerate(), 1]
+      assert false == EctoUtils.all_valid_uuids?(valid_uuids)
+    end
+  end
 end
