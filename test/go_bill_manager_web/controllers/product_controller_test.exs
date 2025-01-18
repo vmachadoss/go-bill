@@ -86,4 +86,7 @@ defmodule GoBillManagerWeb.ProductControllerTest do
       assert product.name == Map.get(response, "name")
     end
   end
+
+  describe "POST /api/v1/products/product_bill" do
+  end
 end
