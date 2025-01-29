@@ -20,4 +20,12 @@ defmodule GoBillManagerWeb.ProductView do
       description: product.description
     }
   end
+
+  def render("product_bill.json", %{product_bill: product_bill}) do
+    %{
+      id: product_bill.id,
+      product_id: product_bill.product_id,
+      bill_id: product_bill.bill_id
+    }
+  end
 end

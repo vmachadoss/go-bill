@@ -86,4 +86,86 @@ defmodule GoBillManagerWeb.ProductControllerTest do
       assert product.name == Map.get(response, "name")
     end
   end
+
+  describe "POST /api/v1/products/product_bill" do
+    test "should return a map when params are valid",
+         ctx do
+      %{id: employee_id} = insert(:employee)
+      %{id: bill_id} = insert(:bill, state: :open, employee_id: employee_id)
+      %{id: product_id} = insert(:product)
+
+      request_body = %{"bill_id" => bill_id, "product_id" => product_id}
+
+      conn =
+        post(ctx.conn, Routes.products_product_bill_path(ctx.conn, :product_bill), request_body)
+
+      response = json_response(conn, 200)
+
+      assert response["bill_id"] == request_body["bill_id"]
+      assert response["product_id"] == request_body["product_id"]
+    end
+
+    test "should return error when product not found", ctx do
+      %{id: employee_id} = insert(:employee)
+      %{id: bill_id} = insert(:bill, state: :open, employee_id: employee_id)
+
+      request_body = %{"bill_id" => bill_id, "product_id" => Faker.UUID.v4()}
+
+      {conn, log} =
+        with_log(fn ->
+          post(ctx.conn, Routes.products_product_bill_path(ctx.conn, :product_bill), request_body)
+        end)
+
+      response = json_response(conn, 404)
+
+      assert response == %{"type" => "error:product_not_found"}
+      assert conn.status == 404
+      assert log =~ "[error] Creation of product bill failed by reason:product_not_found"
+    end
+
+    test "should return error when bill not found", ctx do
+      request_body = %{"bill_id" => Faker.UUID.v4(), "product_id" => Faker.UUID.v4()}
+
+      {conn, log} =
+        with_log(fn ->
+          post(ctx.conn, Routes.products_product_bill_path(ctx.conn, :product_bill), request_body)
+        end)
+
+      response = json_response(conn, 404)
+
+      assert response == %{"type" => "error:bill_not_found"}
+      assert conn.status == 404
+      assert log =~ "[error] Creation of product bill failed by reason:bill_not_found"
+    end
+
+    test "should return error when bill isnt open", ctx do
+      %{id: employee_id} = insert(:employee)
+      %{id: bill_id} = insert(:bill, state: :close, employee_id: employee_id)
+
+      request_body = %{"bill_id" => bill_id, "product_id" => Faker.UUID.v4()}
+
+      {conn, log} =
+        with_log(fn ->
+          post(ctx.conn, Routes.products_product_bill_path(ctx.conn, :product_bill), request_body)
+        end)
+
+      response = json_response(conn, 400)
+
+      assert response == %{"type" => "error:bill_isnt_opened"}
+      assert conn.status == 400
+      assert log =~ "[error] Creation of product bill failed because the bill isn't open"
+    end
+
+    test "should return error when ids are invalid", ctx do
+      request_body = %{"bill_id" => -1, "product_id" => -1}
+
+      conn =
+        post(ctx.conn, Routes.products_product_bill_path(ctx.conn, :product_bill), request_body)
+
+      response = json_response(conn, 400)
+
+      assert response == %{"type" => "error:invalid_uuid"}
+      assert conn.status == 400
+    end
+  end
 end

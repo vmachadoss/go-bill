@@ -7,9 +7,9 @@ name: Code Quality
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -22,7 +22,7 @@ env:
 jobs:
   build:
     name: Build and test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     services:
       postgres:
         image: postgres:14.4-alpine
@@ -44,8 +44,8 @@ jobs:
       - name: Set up Elixir
         uses: erlef/setup-beam@v1.15.4
         with:
-          elixir-version: '1.15.7' # [Required] Define the Elixir version
-          otp-version: '26.1.1'      # [Required] Define the Erlang/OTP version
+          elixir-version: "1.15.7" # [Required] Define the Elixir version
+          otp-version: "26.1.1" # [Required] Define the Erlang/OTP version
 
       - name: Restore dependencies cache
         uses: actions/cache@v3

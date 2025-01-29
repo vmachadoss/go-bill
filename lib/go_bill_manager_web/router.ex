@@ -41,6 +41,8 @@ defmodule GoBillManagerWeb.Router do
         only: [:create, :show, :index],
         as: :product,
         name: :product
+
+      post "/product_bill", ProductController, :product_bill, as: :product_bill
     end
   end
 
