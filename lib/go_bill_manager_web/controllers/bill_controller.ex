@@ -23,7 +23,7 @@ defmodule GoBillManagerWeb.BillController do
     end
   end
 
-  @spec index(Plug.Con.t(), map()) :: Plug.Conn.t()
+  @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, _params), do: render(conn, "index.json", %{bills: BillRepository.list_bills()})
 
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()

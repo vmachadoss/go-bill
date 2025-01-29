@@ -49,7 +49,7 @@ defmodule GoBillManagerWeb.ProductController do
       render(conn, "product_bill.json", %{product_bill: product_bill})
     else
       false ->
-        ErrorResponses.bad_request(conn, "invalid_product_bill_id")
+        ErrorResponses.bad_request(conn, "invalid_uuid")
 
       {:error, reason} when reason in ~w(bill_not_found product_not_found)a ->
         ErrorResponses.not_found(conn, Atom.to_string(reason))
